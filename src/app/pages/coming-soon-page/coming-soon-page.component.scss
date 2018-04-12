@@ -1,0 +1,62 @@
+@import "../../../styles/variables";
+
+app-coming-soon-page {
+  display: block;
+  height: 100%;
+  background: linear-gradient(153deg, $primary-color, $primary-color-2);
+  color: #ffffff;
+  overflow-x: hidden;
+  .content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(50% - 50px);
+    transform: translateY(-50%);
+    .title {
+      font-size: 48px;
+    }
+    .counter > div > div {
+      &:first-child {
+        font-size: 120px;
+        padding: 0 60px;
+        line-height: 1;
+      }
+    }
+  }
+  footer {
+    position: absolute;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  @media screen and (max-width: 1024px) {
+    .content {
+      .title {
+        font-size: 38px;
+      }
+      .counter > div > div {
+        &:first-child {
+          font-size: 80px;
+          padding: 0 20px;
+        }
+      }
+    }
+    footer {
+      bottom: 5px;
+    }
+  }
+  @media screen and (max-width: 550px) {
+    .content {
+      top: calc(50% - 40px);
+      .title {
+        font-size: 28px;
+      }
+      .counter > div > div {
+        &:first-child {
+          font-size: 50px;
+          padding: 0 5px;
+        }
+      }
+    }
+  }
+}

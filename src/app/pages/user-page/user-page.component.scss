@@ -1,0 +1,148 @@
+
+
+.ui-confirmdialog {
+    background: #ffffff;
+}
+.ui-dialog .ui-dialog-titlebar {
+    float: left;
+    width: 100%;
+    background: #F15820;
+}
+.ui-confirmdialog.ui-dialog .ui-dialog-content {
+    float: left;
+    width: 100%;
+}
+.ui-dialog-footer {
+    float: left;
+    width: 100%;
+}
+.ui-dialog-mask {
+    background: #000;
+    opacity: 0.5;
+}
+.span-hidden {
+    white-space: nowrap;
+    overflow: hidden;
+    width: 175px!important;
+    float: left;
+}
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/themes/material.css';
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';
+app-component-table-page {
+    ngx-datatable {
+        height: 400px;
+    }
+}
+.ngx-datatable.material .datatable-footer .datatable-pager li.active a {
+    background-color: rgb(241, 88, 32);
+    font-weight: bold;
+    color: white;
+}
+.ngx-datatable.material {
+    box-shadow: none!important;
+    border: 1px solid #f0f0f0;
+    border-radius: 5px;
+}
+.ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover, .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover .datatable-row-group {
+    background: none;
+}
+.ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {
+    background: #f9f9f9;
+}
+.ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {
+    background: #ecedf37d;
+}
+.datatable-row-wrapper:nth-child(2n) {
+    background: #f9f9f9;
+}
+.ngx-datatable .datatable-body .datatable-scroll {
+    float: left;
+}
+.ngx-datatable .datatable-header .datatable-header-cell.sortable .datatable-header-cell-wrapper {
+    color: #484647;
+    font-size: 14px;
+}
+.ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {
+    border-right: 1px solid #f0f0f0;
+}
+.ngx-datatable.material .datatable-body .datatable-body-row .datatable-body-cell {
+    border-right: 1px solid #f0f0f0;
+}
+.ngx-datatable.material .datatable-header {
+    border-bottom: 1px solid #f0f0f0;
+    float: left;
+}
+.ngx-datatable .datatable-body {
+    float: left;
+}
+.ngx-datatable.material .datatable-footer {
+    border-top: 1px solid #f0f0f0;
+    float: left;
+}
+.ngx-datatable.material .datatable-body .datatable-body-row .datatable-body-cell {
+    color: #757575;
+}
+.datatable-icon-prev:before {
+    content: "\72";
+    opacity: 0;
+}
+.datatable-icon-skip:before {
+    content: "\71";
+    opacity: 0;
+}
+.ngx-datatable.material.multi-click-selection .datatable-body-row.active:hover .datatable-row-group {
+    background: none!important;
+    color: #FFF;
+}
+.datatable-header-cell:first-child {
+    width: 50px !important;
+}
+.datatable-header-cell {
+    width: 210px !important;
+}
+.datatable-body-cell {
+    width: 210px !important;
+}
+.datatable-body-cell:first-child {
+    width: 50px !important;
+}
+hr {
+    border-bottom: 1px solid #e9ecef;
+    border-top: 1px rgba(0, 0, 0, 0.1);
+    margin-right: -20px;
+    margin-left: -20px;
+    margin-top: 50px;
+}
+.ngx-datatable.material.single-selection .datatable-body-row.active:hover, .ngx-datatable.material.single-selection .datatable-body-row.active:hover .datatable-row-group, .ngx-datatable.material.multi-selection .datatable-body-row.active:hover, .ngx-datatable.material.multi-selection .datatable-body-row.active:hover .datatable-row-group, .ngx-datatable.material.multi-click-selection .datatable-body-row.active:hover, .ngx-datatable.material.multi-click-selection .datatable-body-row.active:hover .datatable-row-group {
+    background: none !important;
+}
+.ngx-datatable.material.multi-click-selection .datatable-body-row.active {
+    background: none !important;
+}
+.ngx-datatable.material.single-selection .datatable-body-row.active, .ngx-datatable.material.single-selection .datatable-body-row.active .datatable-row-group, .ngx-datatable.material.multi-selection .datatable-body-row.active, .ngx-datatable.material.multi-selection .datatable-body-row.active .datatable-row-group, .ngx-datatable.material.multi-click-selection .datatable-body-row.active, .ngx-datatable.material.multi-click-selection .datatable-body-row.active .datatable-row-group {
+    background: none !important;
+}
+.table-header {
+    float: left;
+    width: 100%;
+}
+.table-header h5 {
+    width: auto;
+    float: left;
+    margin-top: 7px;
+}
+.table-header .btn {
+    float: right;
+    padding: 0.8rem 1.5rem;
+    line-height: 3px;
+    margin: 0 0 0 15px!important;
+    border-radius: 4px;
+}
+.table-header hr {
+    float: left;
+    width: 100%;
+    display: inline-block;
+    margin: 1rem 0;
+}
+

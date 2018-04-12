@@ -1,0 +1,204 @@
+
+
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/themes/material.css';
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';
+app-component-table-page {
+  ngx-datatable {
+    height: 400px;
+  }
+}
+.ngx-datatable.material .datatable-footer .datatable-pager li.active a{
+	    background-color: rgb(241, 88, 32);
+    	font-weight: bold;
+    	color: white;
+}
+
+.ngx-datatable.material{box-shadow: none!important; border:1px solid #f0f0f0; border-radius: 5px;}
+.ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover, .ngx-datatable.material:not(.cell-selection) .datatable-body-row:hover .datatable-row-group{background: none;}
+.ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell{background: #f9f9f9;}
+.ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell{background: #ecedf37d;}
+.datatable-row-wrapper:nth-child(2n) {
+    background: #f9f9f9;
+}
+.ngx-datatable .datatable-body .datatable-scroll{float:left;}
+.ngx-datatable .datatable-header .datatable-header-cell.sortable .datatable-header-cell-wrapper{color: #484647; font-size: 14px;}
+.ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell{border-right: 1px solid #f0f0f0;}
+.ngx-datatable.material .datatable-body .datatable-body-row .datatable-body-cell{border-right: 1px solid #f0f0f0;}
+.ngx-datatable.material .datatable-header{border-bottom: 1px solid #f0f0f0; float:left;}
+.ngx-datatable .datatable-body{float:left;}
+.ngx-datatable.material .datatable-footer{border-top: 1px solid #f0f0f0; float:left;}
+.ngx-datatable.material .datatable-body .datatable-body-row .datatable-body-cell{color: #757575;}
+.datatable-icon-prev:before {
+    content: "\72";
+    opacity: 0;
+}
+.datatable-icon-skip:before {
+    content: "\71";
+    opacity: 0;
+}
+.ngx-datatable.material.multi-click-selection .datatable-body-row.active:hover .datatable-row-group {
+    background:none!important;
+    color: #FFF;
+}
+.datatable-header-cell:first-child {
+   width: 50px !important;
+}
+.datatable-header-cell{
+       width: 210px !important;
+}
+.datatable-body-cell{
+	width: 210px !important;
+}
+.datatable-body-cell:first-child{
+	width: 50px !important;
+}
+hr {
+    border-bottom: 1px solid #e9ecef;
+    border-top: 1px rgba(0, 0, 0, 0.1);
+        margin-right: -20px;
+  	    margin-left: -20px;
+        margin-top: 50px;
+}
+.ngx-datatable.material.single-selection .datatable-body-row.active:hover, .ngx-datatable.material.single-selection .datatable-body-row.active:hover .datatable-row-group, .ngx-datatable.material.multi-selection .datatable-body-row.active:hover, .ngx-datatable.material.multi-selection .datatable-body-row.active:hover .datatable-row-group, .ngx-datatable.material.multi-click-selection .datatable-body-row.active:hover, .ngx-datatable.material.multi-click-selection .datatable-body-row.active:hover .datatable-row-group{background: none !important;}
+.ngx-datatable.material.multi-click-selection .datatable-body-row.active{background: none !important;}
+.ngx-datatable.material.single-selection .datatable-body-row.active, .ngx-datatable.material.single-selection .datatable-body-row.active .datatable-row-group, .ngx-datatable.material.multi-selection .datatable-body-row.active, .ngx-datatable.material.multi-selection .datatable-body-row.active .datatable-row-group, .ngx-datatable.material.multi-click-selection .datatable-body-row.active, .ngx-datatable.material.multi-click-selection .datatable-body-row.active .datatable-row-group{background: none !important;}
+
+.table-header{ float: left; width: 100%;}
+.table-header h5{width: auto; float: left; margin-top: 7px;}
+.table-header .btn{float: right; padding: 0.8rem 1.5rem; line-height: 3px; margin: 0 0 0 15px!important; border-radius: 4px;}
+.table-header hr{float: left; width: 100%; display: inline-block; margin: 1rem 0;}
+
+
+.modal-content {
+    width: 665px !important;
+}
+ .custom-C label{width:100%;}
+ .custom-C p-multiselect .ui-multiselect{width:100%;}
+
+ .dropZoneColor {
+  border: 3px dotted rgba(0,0,0,0.08);
+  background-color: rgba(0,0,0,0.12)
+}
+
+.dropZoneColorDrag {
+  border: 3px dotted rgba(0,0,0,0.28);
+  background-color: grey
+}
+
+.dropZoneColorDrop {
+  border: 3px dotted rgba(0,0,0,0.08);
+  background-color: rgba(0,0,0,0.12)
+}
+
+.hero .drop-container p .upload-button input {
+     display: none; 
+}
+.hero .drop-container p .upload-button {
+    height: 32px;
+    width: 143px;
+    border-radius: 4px;
+    background-color: #1AA249;
+    text-align: center;
+    margin: 0 auto;
+    display: table;
+    line-height: 32px;
+    color: #fff;
+    cursor: pointer
+}
+
+
+.hero.is-fullheight {
+    border: 4px dashed #e5e5e5;
+    min-height: 230px;
+    position: relative;
+    width: 100%;
+    float: left;
+}
+
+.hero.is-fullheight p span {
+    width: 100%;
+    float: left;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.hero.is-fullheight p{
+  position: absolute;
+  margin:0;
+  transform: translate(-50%,-50%);
+  left: 50%;
+  top:46%;
+  width: 100%;
+  float: left;
+}
+
+.hero.is-fullheight p i {
+    text-align: center;
+    width: 100%;
+    float: left;
+}
+
+.hero.is-fullheight p i img {
+    width: 60px;
+}
+
+.custom-row-inprogress{
+  padding: 10px 20px;
+    width: 100%;
+    border: 1px solid #9F9F9F;
+    border-radius: 4px;
+    background-color: #F2F3F7;
+    margin-top:10px;
+}
+
+.custom-row-inprogress span{
+  color: #f15820;
+}
+
+.hero.is-fullheight.is-file{float: left; width: 100%; display: block; margin-bottom: 30px;}
+.hero.is-fullheight.is-fileheight{max-height: 67px; min-height: 67px;}
+.no-border{border: none!important;}
+.is-fileheight.is-fullheight p{
+      position: absolute;
+    margin: 0;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 75%;
+    width: 100%;
+    float: left;
+}
+.is-fileheight .drop-container p .upload-button{
+      height: 32px;
+    width: 143px;
+    border-radius: 4px;
+     background:none; 
+    text-align: center;
+    margin: 0 auto;
+    display: table;
+    line-height: 0;
+    color: #1AA249;
+    cursor: pointer;
+}
+.cancel-file-upload{
+  float: right;
+    text-align: right;
+    position: relative;
+    bottom: 18px;
+    color: #808080 !important;
+    font-size: 19px;
+    cursor:pointer;
+}
+
+.hidden-div{
+  display:none;
+}
+
+.fa-file:before{
+  color: #EBEAEA;
+}
+.custom-datepicker input{
+     padding: 11px;
+}
+

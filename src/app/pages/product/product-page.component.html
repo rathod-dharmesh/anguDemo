@@ -1,0 +1,669 @@
+<p-confirmDialog></p-confirmDialog>
+<h2 class="text-center">Products List</h2>
+<div class="text-center">
+   <nav class="breadcrumb mx-auto d-inline-block">
+      <a class="breadcrumb-item text-body" routerLink="/main/dashboard">Home</a>
+      <a class="breadcrumb-item text-body" routerLink="/main/product">Products</a>
+   </nav>
+</div>
+<div class="card mb-3">
+   <div class="card-body">
+      <div class="table-header">
+         <h5 class="card-title">Products List</h5>
+         <button class="btn btn-primary mb-3 mr-3" type="button" (click)="add(content)" >Add Product</button>
+         <a  href="{{settings.apiUrl('downloadExcel/csv')}}"><button class="btn btn-success">Export Products To CSV</button></a>
+         <button class="btn btn-primary mb-3 mr-3" type="button" (click)="addCSV(content_1)" >Add Product CSV</button>
+         <button class="btn btn-primary mb-3 mr-3" type="button" (click)="actionDeleteAllMessage('trash')" *ngIf="selected.length >= 1">Delete All</button>
+         <div style="float: right;" class="form-group">
+            <select [(ngModel)]="page_limit"  class="form-control" style="height: 34px; padding: 0; border-radius: 4px; padding-left:  20px;">
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            </select>
+         </div>
+      </div>
+      <hr>
+      <ngx-datatable
+      style="width: 100%"
+      class="material"
+      [rows]="rows"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [limit]="page_limit"
+      [messages]="{emptyMessage: 'Add your first Product', totalMessage: 'total'}"
+      [selected]="selected"
+      [selectionType]="'checkbox'"
+      [selectAllRowsOnPage]="false"
+      [displayCheck]="displayCheck"
+      (activate)="onActivate($event)"
+      (select)='onSelect($event)'>
+      <ngx-datatable-column
+      [sortable]="false"
+      [canAutoResize]="false"
+      [draggable]="false"
+      [resizeable]="false"
+      [headerCheckboxable]="true"
+      [checkboxable]="true">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Customer Facing Name" prop="customer_facing_name">
+         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <a>{{row.customer_facing_name}}</a>
+         </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="SKU">
+         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            {{row.sku}}
+         </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Category" prop="category">
+         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            {{row.category}}
+         </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Frequency"  prop="our_cost">
+         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            {{row.frequency}}
+         </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Action">
+         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <a class="fa fa-edit" #btnElement style="cursor: pointer;" (click)="editProduct(btnElement,row.id,content)"></a>&nbsp;&nbsp;
+            <a class="fa fa-trash-o" style="cursor: pointer;" #btnElement (click)="actionDeleteMessage(row.id,'trash',btnElement)"></a>
+         </ng-template>
+      </ngx-datatable-column>
+      </ngx-datatable>
+   </div>
+</div>
+<div class="card" style="margin-top:150px;">
+   <ng-template #content let-c="close" let-d="dismiss">
+      <div class="modal-header">
+         <h4 *ngIf="!add_Product.id" class="card-title">Add Product</h4>
+         <h4 *ngIf="add_Product.id"class="card-title">Edit  Product</h4>
+         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+         <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+      <div class="modal-body">
+         <div class="row mb-3">
+            <div class="col-12 col-lg-12 mb-3">
+               <div class="card">
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-12 col-sm-12 form-group">
+                           <label for="input-name">All markets:</label>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="input-name">Customer Facing Name *</label>
+                           <input type="text" class="form-control" id="input-name" [(ngModel)]="add_Product.customer_facing_name">
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="input-name">Label Name*</label>
+                           <input type="text" class="form-control" id="input-end-name" [(ngModel)]="add_Product.label_name" required>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="input-name">SKU*</label>
+                           <input type="text" class="form-control" id="input-sku" [(ngModel)]="add_Product.sku" required>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="exampleFormControlSelect1">Vendor *</label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.vendor_id">
+                           <option *ngFor="let vendor of vendors;" value="{{vendor.id}}">{{vendor.first_name}} {{vendor.last_name}}</option>
+                           </select>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="exampleFormControlSelect1">Category *</label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.category">
+                           <option value="Add On">Add On </option>
+                           <option value="Rescued Harvests">Rescued Harvests</option>
+                           <option value="Subproducts">Subproducts</option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-6 form-group custom-C ">
+                           <label for="exampleFormControlSelect1">Subcategory *</label>
+                           <p-multiSelect [options]="subcategories"  [panelStyle]="{minWidth:'12em'}"  [(ngModel)]="add_Product.subcategory"></p-multiSelect>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="exampleFormControlSelect1">Frequency *</label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.frequency">
+                           <option value="Weekly & Every Other Week">Weekly & Every Other Week</option>
+                           <option value="Weekly">Weekly</option>
+                           <option value="Every Other Week">Every Other Week</option>
+                           <option value="Monthly">Monthly</option>
+                           <option value="One Time Only">One Time Only</option>
+                           </select>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group custom-C">
+                           <label for="exampleFormControlSelect1">Weeks Available *</label>
+                           <p-multiSelect [options]="weeks"  [panelStyle]="{minWidth:'12em'}"  [(ngModel)]="add_Product.weeks_avilable"></p-multiSelect>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group custom-C">
+                           <label for="exampleFormControlSelect1">Days of Week Availability</label>
+                           <p-multiSelect [options]="weekdays"  [panelStyle]="{minWidth:'12em'}"  [(ngModel)]="add_Product.day_avilable"></p-multiSelect>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group custom-C">
+                           <label for="exampleFormControlSelect1">Never List Categories</label>
+                           <p-multiSelect [options]="neverlistcategories"  [panelStyle]="{minWidth:'12em'}" [(ngModel)]="add_Product.never_list_categories" ></p-multiSelect>
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Default Unit Size</label>
+                           <input type="text" class="form-control" id="input-end-name" [(ngModel)]="add_Product.default_unit_size" required>
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="exampleFormControlSelect1">Ice Pack</label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.ice_pack">
+                           <option value=""> </option>
+                           <option value="Y">Y </option>
+                           <option value="N">N</option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="exampleFormControlSelect1">Sorting</label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.sorting" >
+                           <option value=""> </option>
+                           <option value="Y">Y </option>
+                           <option value="N">N</option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="exampleFormControlSelect1">Heavy or Large Item?</label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.heavy_or_large_item" >
+                           <option value=""> </option>
+                           <option value="Y">Y </option>
+                           <option value="N">N</option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="exampleFormControlSelect1">Repacking</label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.repacking">
+                           <option value=""> </option>
+                           <option value="Y">Y </option>
+                           <option value="N">N</option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="exampleFormControlSelect1">Storage Temp</label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.storage_temp">
+                           <option value=""> </option>
+                           <option value="32 - 36">32 - 36 </option>
+                           <option value="40 - 55">40 - 55 </option>
+                           <option value="55 - 60">55 - 60 </option>
+                           <option value="Other">Other</option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="exampleFormControlSelect1">Fragility Level</label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.fragility_level">
+                           <option value=""> </option>
+                           <option value="Fragile">Fragile </option>
+                           <option value="Medium">Medium </option>
+                           <option value="Sturdy">Sturdy </option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-6 form-group custom-C">
+                           <label for="exampleFormControlSelect1">Ethelyne Classification</label>
+                           <p-multiSelect [options]="ethelyne"  [panelStyle]="{minWidth:'12em'}"  [(ngModel)]="add_Product.ethelyne_classification"></p-multiSelect>
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="exampleFormControlSelect1">Value</label> 
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.value">
+                           <option value=""> </option>
+                           <option value="High Value">High Value </option>
+                           <option value="Low Value">Low Value </option>
+                           <option value="Medium Value">Medium Value </option>
+                           <option value="Other">Other </option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="exampleFormControlSelect1">Perishable? </label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.perishable" >
+                           <option value=""> </option>
+                           <option value="Y">Y </option>
+                           <option value="N">N</option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="exampleFormControlSelect1">Tracking Inventory? </label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.tracking_inventory">
+                           <option value=""> </option>
+                           <option value="Y">Y </option>
+                           <option value="N">N</option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Expiration Date</label>
+                           <!--  <input [textMask]="{mask: dateMask}" type="text" class="form-control" id="input-date"
+                              placeholder="DD/MM/YYYY" [(ngModel)]="add_Product.expiration_date"> -->
+                           <p-calendar [showIcon]="true" [(ngModel)]="add_Product.expiration_date" [minDate]="min" class="custom-datepicker"  placeholder="00/00/0000"></p-calendar>
+                        </div>
+                        <div></div>
+                        <div class="col-12 col-sm-12 form-group">
+                           <label for="input-name">DMV Market Specific:</label>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="exampleFormControlSelect1">Available for DMV? * </label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.dmv_available" >
+                           <option value=""> </option>
+                           <option value="Hidden, but available">Hidden, but available </option>
+                           <option value="Available for sale">Available for sale</option>
+                           <option value="Not available for sale">Not available for sale</option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="input-name">DMV Customer Price</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.dmv_customer_price" >
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">DMV Grocery Price</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.dmv_grocery_price" >
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">DMV Our Cost</label>
+                           <input type="number" class="form-control" id="input-cuomerprice"  [(ngModel)]="add_Product.dmv_our_cost">
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">DMV Description</label>
+                           <input type="text" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.dmv_description" >
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">DMV Unit Quantity</label>
+                           <input type="number" class="form-control" id="input-cuomerprice"  [(ngModel)]="add_Product.dmv_quantity" >
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="exampleFormControlSelect1">DMV Unit Type/Size</label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.dmv_unit_type_size" >
+                           <option value=""> </option>
+                           <option value="ct">ct </option>
+                           <option value="oz">oz</option>
+                           <option value="lb">lb</option>
+                           <option value="bag">bag</option>
+                           <option value="clamshell">clamshell</option>
+                           <option value="bunch">bunch</option>
+                           <option value="head">head</option>
+                           <option value="pint">pint</option>
+                           <option value="quart">quart</option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">DMV Inventory Limits</label>
+                           <input type="number" class="form-control" id="input-cuomerprice"  [(ngModel)]="add_Product.dmv_inventory_limits" >
+                        </div>
+                        <div class="col-12 col-sm-12 form-group">
+                           <label for="input-name">Philly Market Specific:</label>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="exampleFormControlSelect1">Available for Philly? *</label>
+                           <select class="form-control" id="exampleFormControlSelect1"  [(ngModel)]="add_Product.philly_available">
+                           <option value=""> </option>
+                           <option value="Hidden, but available">Hidden, but available </option>
+                           <option value="Available for sale">Available for sale</option>
+                           <option value="Not available for sale">Not available for sale</option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="input-name">Philly Customer Price</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.philly_customer_price">
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Philly Grocery Price</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.philly_grocery_price">
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Philly Our Cost</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.philly_our_cost">
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Philly Description</label>
+                           <input type="text" class="form-control" id="input-cuomerprice"  [(ngModel)]="add_Product.philly_description">
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Philly Unit Quantity</label>
+                           <input type="number" class="form-control" id="input-cuomerprice"  [(ngModel)]="add_Product.philly_quantity">
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="exampleFormControlSelect1">Philly Unit Type/Size</label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.philly_unit_type_size">
+                           <option value=""> </option>
+                           <option value="ct">ct </option>
+                           <option value="oz">oz</option>
+                           <option value="lb">lb</option>
+                           <option value="bag">bag</option>
+                           <option value="clamshell">clamshell</option>
+                           <option value="bunch">bunch</option>
+                           <option value="head">head</option>
+                           <option value="pint">pint</option>
+                           <option value="quart">quart</option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Philly Inventory Limits</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.philly_inventory_limits">
+                        </div>
+                        <div class="col-12 col-sm-12 form-group">
+                           <label for="input-name">Raleigh Market Specific:</label>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="exampleFormControlSelect1">Available for Raleigh? *</label>
+                           <select class="form-control" id="exampleFormControlSelect1"  [(ngModel)]="add_Product.raleigh_available">
+                           <option value=""> </option>
+                           <option value="Hidden, but available">Hidden, but available </option>
+                           <option value="Available for sale">Available for sale</option>
+                           <option value="Not available for sale">Not available for sale</option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="input-name">Raleigh Customer Price</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.raleigh_customer_price">
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Raleigh Grocery Price</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.raleigh_grocery_price">
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Raleigh Our Cost</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.raleigh_our_cost">
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Raleigh Description</label>
+                           <input type="text" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.raleigh_description">
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Raleigh Unit Quantity</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.raleigh_quantity">
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="exampleFormControlSelect1">Raleigh Unit Type/ Size</label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.raleigh_unit_type_size" >
+                           <option value=""> </option>
+                           <option value="ct">ct </option>
+                           <option value="oz">oz</option>
+                           <option value="lb">lb</option>
+                           <option value="bag">bag</option>
+                           <option value="clamshell">clamshell</option>
+                           <option value="bunch">bunch</option>
+                           <option value="head">head</option>
+                           <option value="pint">pint</option>
+                           <option value="quart">quart</option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Raleigh Inventory Limits</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.raleigh_inventory_limits">
+                        </div>
+                        <div class="col-12 col-sm-12 form-group">
+                           <label for="input-name">Miami Market Specific:</label>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="exampleFormControlSelect1">Available for Miami? *</label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.miami_available" >
+                           <option value=""> </option>
+                           <option value="Hidden, but available">Hidden, but available </option>
+                           <option value="Available for sale">Available for sale</option>
+                           <option value="Not available for sale">Not available for sale</option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="input-name">Miami Customer Price</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.miami_customer_price">
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Miami Grocery Price</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.miami_grocery_price">
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Miami Our Cost</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.miami_our_cost">
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Miami Description</label>
+                           <input type="text" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.miami_description">
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Miami Unit Quantity</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.miami_quantity" >
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="exampleFormControlSelect1">Miami Unit Size/Type</label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.miami_unit_type_size">
+                           <option value=""> </option>
+                           <option value="ct">ct </option>
+                           <option value="oz">oz</option>
+                           <option value="lb">lb</option>
+                           <option value="bag">bag</option>
+                           <option value="clamshell">clamshell</option>
+                           <option value="bunch">bunch</option>
+                           <option value="head">head</option>
+                           <option value="pint">pint</option>
+                           <option value="quart">quart</option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Miami Inventory Limits</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.miami_inventory_limits" >
+                        </div>
+                        <div class="col-12 col-sm-12 form-group">
+                           <label for="input-name">Detroit Market Specific:</label>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="exampleFormControlSelect1">Available for Detroit? *</label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.detroit_available" >
+                           <option value=""> </option>
+                           <option value="Hidden, but available">Hidden, but available </option>
+                           <option value="Available for sale">Available for sale</option>
+                           <option value="Not available for sale">Not available for sale</option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="input-name">Detroit Customer Price</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.detroit_customer_price">
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Detroit Grocery Price</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.detroit_grocery_price">
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Detroit Our Cost</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.detroit_our_cost">
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Detroit Description</label>
+                           <input type="text" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.detroit_description">
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Detroit Unity Quantity</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.detroit_quantity">
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="exampleFormControlSelect1">Detroit Unit Size/Type</label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.detroit_unit_type_size">
+                           <option value=""> </option>
+                           <option value="ct">ct </option>
+                           <option value="oz">oz</option>
+                           <option value="lb">lb</option>
+                           <option value="bag">bag</option>
+                           <option value="clamshell">clamshell</option>
+                           <option value="bunch">bunch</option>
+                           <option value="head">head</option>
+                           <option value="pint">pint</option>
+                           <option value="quart">quart</option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-4 form-group">
+                           <label for="input-name">Detroit Inventory Limits</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.detroit_inventory_limits">
+                        </div>
+                        <div class="col-12 col-sm-12 form-group">
+                           <label for="input-name">NewMarket Specific:</label>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="exampleFormControlSelect1">Available for NewMarket? *</label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.newmarket_available" >
+                           <option value=""> </option>
+                           <option value="Hidden, but available">Hidden, but available </option>
+                           <option value="Available for sale">Available for sale</option>
+                           <option value="Not available for sale">Not available for sale</option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="input-name">NewMarket Customer Price</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.newmarket_customer_price">
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="input-name">NewMarket Grocery Price</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.newmarket_grocery_price">
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="input-name">NewMarket Our Cost</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.newmarket_our_cost">
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="input-name">NewMarket Description</label>
+                           <input type="text" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.newmarket_description">
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="input-name">NewMarket Unity Quantity</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.newmarket_quantity">
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="exampleFormControlSelect1">NewMarket Unit Size/Type</label>
+                           <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Product.newmarket_unit_type_size">
+                           <option value=""> </option>
+                           <option value="ct">ct </option>
+                           <option value="oz">oz</option>
+                           <option value="lb">lb</option>
+                           <option value="bag">bag</option>
+                           <option value="clamshell">clamshell</option>
+                           <option value="bunch">bunch</option>
+                           <option value="head">head</option>
+                           <option value="pint">pint</option>
+                           <option value="quart">quart</option>
+                           </select> 
+                        </div>
+                        <div class="col-12 col-sm-6 form-group">
+                           <label for="input-name">NewMarket Inventory Limits</label>
+                           <input type="number" class="form-control" id="input-cuomerprice" [(ngModel)]="add_Product.newmarket_inventory_limits">
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="modal-footer">
+         <button  type="button" class="btn btn-primary" (click)="c('Close click')">Cancel</button>
+         <button  *ngIf="!add_Product.id" type="button" class="btn btn-primary" (click)="addProducts()">Add</button>
+         <button  *ngIf="add_Product.id" type="button" class="btn btn-primary" (click)="updateproducts()">Update</button>
+      </div>
+   </ng-template>
+</div>
+<div class="card" style="margin-top:150px;">
+   <ng-template #content_1 let-c="close" let-d="dismiss">
+      <div class="modal-header">
+         <h4  class="card-title">Select Your File</h4>
+         <button type="button" class="close" aria-label="Close" (click)="closeCsvModel()">
+         <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+      <div class="modal-body">
+         <div class="row mb-3">
+            <div class="col-12 col-lg-12 mb-3">
+               <div class="card">
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="hero is-fullheight" [ngClass]="(files.length > 0) ? 'hidden-div' : ''" >
+                           <div class="hero-body">
+                              <div class="container">
+                                 <div class="columns is-multiline">
+                                    <div class="column is-8 is-offset-2" >
+                                       <div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput">
+                                       <p>
+                                          <i><img src="assets/images/cloud-upload.png"></i>
+                                          <span>Drag and drop your file here or click in the button below</span>
+                                          <label class="upload-button">
+                                          <input type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput"  multiple>
+                                          Browse for file
+                                          </label>
+                                       </p>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="hero is-fullheight is-file no-border" style="min-height: auto;" *ngIf="files.length > 0">
+                        <div class="hero-body">
+                           <div class="container">
+                              <div class="columns is-multiline">
+                                 <div class="column is-8 is-offset-2">
+                                    <div class="upload-items">
+                                       <div *ngFor="let f of files; let i = index;" class="upload-item custom-row-inprogress">
+                                          <div class="file-icon pull-left">
+                                             <i class="fa fa-file" style="font-size: 3em">
+                                             <span class="ng-tns-c4-1" style="font-size: 11px;margin-top: -25px;margin-left: -9px;display: block;font-weight: 800;text-transform: uppercase;">
+                                             csv
+                                             </span>
+                                             </i>
+                                          </div>
+                                          <div style="margin-left: 50px;">
+                                             <div class="filename">
+                                                <span>
+                                                   {{ f.name }} <!-- ({{ f.id }}) -->
+                                                </span>
+                                             </div>
+                                             <div class="progress" style="width: 97%;">
+                                                <span style="background-color: #f15820" class="bar" [style.width]="f?.progress?.data?.percentage + '%'">
+                                                </span>
+                                             </div>
+                                             <span class="cancel-file-upload" (click)="cancelUpload(f.id)">x</span>
+                                             <div>
+                                                <span>{{ f.progress?.data?.percentage }}%  uploading with {{ f.progress?.data?.speedHuman }}</span>
+                                                <span>ETA {{ f.progress?.data?.etaHuman }}</span>
+                                             </div>
+                                          </div>
+                                          <div *ngIf="f.progress.data.percentage==100">
+                                             <hr style="margin-top:0;">
+                                             <span style="color:black; font-weight: bold;">File Logs:</span><br>
+                                             <span style="color:black;">Total Products In File: &nbsp;{{log_datails[i]?.Total_product}}</span><br>
+                                             <span style="color:black;" >Total Products Added: &nbsp;{{log_datails[i]?.Added_product}} </span><br>
+                                             <span style="color:black;" >Total Products Rejected Due To missing Sku  Or Vendor:&nbsp; {{log_datails[i]?.Not_updated}} </span> 
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="hero is-fullheight is-fileheight"  *ngIf="files.length > 0">
+                        <div class="hero-body">
+                           <div class="container">
+                              <div class="columns is-multiline">
+                                 <div class="column is-8 is-offset-2">
+                                    <div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput">
+                                    <p>
+                                       <span>Drag and drop your file here or click in the button below</span>
+                                       <label class="upload-button">
+                                       <input type="file" class="file-button" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput"  multiple>
+                                       Browse for file
+                                       </label>
+                                    </p>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+</div>
+</div>
+<div class="modal-footer">
+<button  type="button" style="background-color:#9d9d9e;border-color: #9d9d9e;border-radius: 4px;" class="btn btn-primary" 
+   (click)="closeCsvModel()">Cancel</button>
+<button  type="button" style="border-radius: 4px;" class="btn btn-primary" (click)="startUpload()">Save</button>  
+</div>
+</ng-template>
+</div>

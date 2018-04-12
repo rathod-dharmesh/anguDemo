@@ -1,0 +1,242 @@
+<!--  <div class="row">
+  <div class="col-12 col-xl-8">
+    <div class="card world-map-card">
+      <div class="card-body d-flex flex-column">
+        <div class="d-flex justify-content-start">
+          <h5 class="card-title text-nowrap mr-2">Location</h5>
+          <div class="ml-auto">
+            <i class="material-icons clickable">refresh</i>
+          </div>
+        </div>
+        <div class="map-wrap">
+          <div class="map" #worldMap>
+          </div>
+        </div>
+        <div class="container-fluid mt-auto">
+          <div class="row">
+            <div class="col-12 col-lg-5 mt-4 mt-lg-0 polar-wrap">
+              <h5>Top countries</h5>
+              <div #polarClockChart class="polar-clock-chart mb-2"></div>
+              <div class="polar-clock-text">Lorem ipsum dolor sit amet, consecteetur.</div>
+
+              <table class="table table-sm">
+                <thead>
+                <tr>
+                  <td>Country</td>
+                  <td>Market share</td>
+                  <td>Changes</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of polarClockItems" [ngStyle]="{color: item.color}">
+                  <td>
+                    <i [ngStyle]="{'border-color': item.color}"></i>
+                    <span>{{item.name}}</span>
+                  </td>
+                  <td>{{Math.floor(item.value * 100)}}%</td>
+                  <td>
+                    <div class="delta" [ngClass]="{negative: item.delta < 0}"
+                         [ngStyle]="{'border-bottom-color': item.color}"></div>
+                    <span>{{Math.floor(Math.abs(item.delta * 100))}}%</span>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-12 col-lg-7 pl-lg-5 mt-4 mt-lg-0 group-bar-wrap">
+              <h5 class="card-title">Manage activity</h5>
+              <div class="mb-3">26 Jun - 31 Jun</div>
+              <div #groupBarChart class="group-bar-chart"></div>
+              <h5>Lorem</h5>
+              <div class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto assumenda
+                blanditiis, consequuntur, deserunt dolore dolores doloribus eveniet illum inventore molestias placeat
+                quidem quos sequi sunt!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-xl-4">
+    <div class="row">
+      <div class="col-12 col-lg-6 col-xl-12 pt-3 pt-xl-0">
+        <div class="card line-trend-card">
+          <div class="card-body d-flex flex-column">
+            <div class="d-flex justify-content-start">
+              <h5 class="card-title text-nowrap">Earnings</h5>
+              <div class="ml-auto">
+                <i class="material-icons clickable">file_download</i>
+              </div>
+            </div>
+            <div class="mb-4">27 Jun, Thursday - 31 Jun, Monday</div>
+            <div class="h2 text-primary">$ 158 450</div>
+            <div class="delta pl-1">10% compared to the previous month</div>
+            <div #trendLineChart class="trend-line-chart"></div>
+            <div class="divider mt-4 mb-4"></div>
+            <div class="row mt-auto">
+              <div class="col-6">
+                <div class="mb-3">Max a day</div>
+                <div class="text-truncate">
+                  <span class="h5 text-primary">$ 35 147</span> on Monday
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="mb-3">Min a day</div>
+                <div class="text-truncate">
+                  <span class="h5 text-primary">$ 7 020</span> on Friday
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6 col-xl-12 pt-3">
+        <div class="card radar-cart">
+          <div class="card-body d-flex flex-column">
+            <div class="d-flex justify-content-start">
+              <h5 class="card-title text-nowrap mr-2">Tasks</h5>
+              <div class="ml-auto">
+                <div ngbDropdown class="dropdown-no-toggle dropdown-grow d-inline-block" placement="bottom-right">
+                  <i class="material-icons clickable" ngbDropdownToggle>more_vert</i>
+                  <div ngbDropdownMenu>
+                    <button class="dropdown-item">Refresh</button>
+                    <button class="dropdown-item">Settings</button>
+                    <button class="dropdown-item">Help</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div #radarChart class="radar-chart mb-3"></div>
+            <div class="row mt-auto">
+              <div class="col-3 align-self-center text-center">
+                <div class="h2 m-0">76%</div>
+              </div>
+              <div class="col-9 text-justify">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias culpa fuga inventore
+                iste quidem suscipit.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 col-xl-8 pt-3 d-flex">
+    <div class="card table-card w-100">
+      <div class="card-body">
+        <div class="d-flex justify-content-start mb-0">
+          <h5 class="card-title text-nowrap mr-2">Average dynamic</h5>
+          <div class="ml-auto">
+            <div ngbDropdown class="dropdown-no-toggle dropdown-grow d-inline-block" placement="bottom-right">
+              <i class="material-icons clickable" ngbDropdownToggle>more_vert</i>
+              <div ngbDropdownMenu>
+                <button class="dropdown-item">Refresh</button>
+                <button class="dropdown-item">Settings</button>
+                <button class="dropdown-item">Help</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <table class="table px-gdn-table mb-0">
+            <thead>
+            <tr>
+              <td>Company</td>
+              <td>Progress</td>
+              <td class="d-none d-sm-table-cell">Location</td>
+              <td class="d-none d-sm-table-cell">Changes</td>
+              <td>Budget</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of averageDynamicItems">
+              <td>{{item.company}}</td>
+              <td>
+                <ngb-progressbar [value]="item.progress" class="bar-gradient"></ngb-progressbar>
+              </td>
+              <td class="d-none d-sm-table-cell">{{item.location}}</td>
+              <td class="text-nowrap d-none d-sm-table-cell">
+                <px-gdn-echarts [option]="item.smallPie" class="small-pie"></px-gdn-echarts>
+                <span>{{Math.round(item.changes * 100)}} %</span>
+              </td>
+              <td class="text-nowrap">$ {{item.budget}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-xl-4 pt-3 d-flex">
+    <div class="card area-card w-100">
+      <div class="card-body">
+        <h5 class="card-title">Stock price</h5>
+        <div #areaChart class="area-chart"></div>
+        <div class="text-and-pie text-justify mt-5">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda dolore impedit molestias, mollitia officia
+          temporibus?
+          <div class="pie-wrap">
+            <div #pieChart class="pie-chart"></div>
+            <div class="h2">81%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 col-xl-4 pt-3 d-flex">
+    <div class="card line-chart-card w-100">
+      <div class="card-body d-flex flex-column">
+        <div class="d-flex justify-content-start">
+          <h5 class="card-title text-nowrap mr-2">Manage activity</h5>
+          <div class="ml-auto text-truncate">26 eJun - 31 Jun</div>
+          <div class="ml-2">
+            <i class="material-icons clickable">event_note</i>
+          </div>
+        </div>
+        <div #lineChart class="line-chart"></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-xl-8 pt-3 d-flex">
+    <div class="card bar-card w-100">
+      <div class="card-body">
+        <h5 class="card-title">Expense statistics</h5>
+        <div class="row pt-2 mb-4">
+          <div class="col-12 col-lg-9">
+            <div #barChart class="bar-chart"></div>
+          </div>
+          <div class="col-12 col-lg-3 mb-3 mt-3 m-lg-0 text-justify">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores eum hic temporibus! Nesciunt quasi quo
+            unde. Alias aliquid cum dolores enim error, explicabo magni minus nisi possimus qui tenetur vitae!
+          </div>
+        </div>
+        <table class="table mb-0 table-sm">
+          <thead>
+          <tr>
+            <td class="d-none d-sm-table-cell">Id</td>
+            <td>Tasks</td>
+            <td>Assigned to</td>
+            <td class="d-none d-sm-table-cell">Time</td>
+            <td>Status</td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of expenseItems">
+            <td class="d-none d-sm-table-cell">{{item.id}}</td>
+            <td>{{item.tasks}}</td>
+            <td>{{item.assigned}}</td>
+            <td class="d-none d-sm-table-cell">{{item.time}}</td>
+            <td [ngClass]="item.status">{{item.statusName}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+ -->

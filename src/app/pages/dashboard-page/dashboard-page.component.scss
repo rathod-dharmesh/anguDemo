@@ -1,0 +1,198 @@
+@import '~bootstrap/scss/mixins/text-truncate';
+@import '../../../styles/variables';
+
+app-dashboard-page {
+  overflow-x: hidden;
+  display: block;
+  .world-map-card {
+    .card-body {
+      @media screen and (min-width: 992px) {
+        height: 950px;
+      }
+      .map-wrap {
+        max-width: 885px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .polar-wrap {
+        .polar-clock-chart {
+          height: 260px;
+        }
+        .polar-clock-text {
+          position: absolute;
+          left: 50%;
+          top: 125px;
+          width: 110px;
+          text-align: center;
+          transform: translateX(-50%);
+        }
+        table {
+          margin-bottom: 0;
+          thead {
+            td {
+              border: transparent;
+            }
+          }
+          tbody {
+            td {
+              white-space: nowrap;
+              font-weight: 600;
+              &:nth-child(1) {
+                font-weight: 400;
+                i {
+                  content: '';
+                  display: inline-block;
+                  width: 20px;
+                  height: 20px;
+                  border: 2px solid;
+                  border-radius: 10px;
+                  vertical-align: bottom;
+                }
+                span {
+                  margin-left: 15px;
+                }
+              }
+              &:nth-child(3) {
+                .delta {
+                  content: '';
+                  display: inline-block;
+                  width: 0;
+                  height: 0;
+                  border-style: solid;
+                  border-width: 0 3px 6px 3px;
+                  border-color: transparent transparent #007bff transparent;
+                  margin-bottom: 2px;
+                  &.negative {
+                    transform: rotate(180deg);
+                  }
+                }
+
+              }
+            }
+          }
+          td:nth-child(1) {
+            width: 30%;
+          }
+          td:nth-child(2) {
+            width: 30%;
+            text-align: right;
+          }
+          td:nth-child(3) {
+            width: 40%;
+            text-align: right;
+            padding-right: 30px;
+          }
+        }
+      }
+      .group-bar-wrap {
+        .group-bar-chart {
+          height: 300px;
+        }
+      }
+    }
+  }
+  .line-trend-card {
+    .card-body {
+      height: 420px;
+      .trend-line-chart {
+        height: 135px;
+      }
+      .delta {
+        &:before {
+          content: '';
+          display: inline-block;
+          width: 0;
+          height: 0;
+          margin-right: 5px;
+          border-style: solid;
+          border-width: 0 4px 8px 4px;
+          border-color: transparent transparent $primary-color transparent;
+        }
+      }
+      .divider {
+        height: 2px;
+        background-color: rgba(0, 0, 0, 0.11);
+        margin: 0 -20px;
+      }
+    }
+  }
+  .radar-cart {
+    .card-body {
+      height: 514px;
+      .radar-chart {
+        height: 350px;
+      }
+    }
+  }
+  .area-card {
+    .area-chart {
+      height: 180px;
+      margin: 0 -20px;
+    }
+    .text-and-pie {
+      padding-right: 120px;
+      position: relative;
+      .pie-wrap {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        width: 90px;
+        transform: translateY(-50%);
+        .pie-chart {
+          height: 90px;
+        }
+        .h2 {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+
+  }
+  .line-chart-card {
+    .line-chart {
+      min-height: 340px;
+      flex: 1;
+    }
+  }
+  .bar-card {
+    .bar-chart {
+      height: 180px;
+    }
+    td {
+      width: 20%;
+      &.in-progress {
+        color: #0fcbfa;
+      }
+      &.done {
+        color: $primary-color;
+      }
+      &.missed {
+        color: #3e4f5c;
+      }
+    }
+    thead {
+      td {
+        border-top: none;
+      }
+    }
+    tbody {
+      tr:nth-child(n + 2) {
+        td {
+          border-top: none;
+        }
+      }
+    }
+
+  }
+  perfect-scrollbar {
+    .ps__scrollbar-y-rail {
+      opacity: 1 !important;
+    }
+    .ps__scrollbar-x-rail {
+      opacity: 1 !important;
+    }
+  }
+}

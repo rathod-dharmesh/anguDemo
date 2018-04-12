@@ -1,0 +1,278 @@
+<p-confirmDialog></p-confirmDialog>
+
+<h2 class="text-center">Vendors List</h2>
+<div class="text-center">
+  <nav class="breadcrumb mx-auto d-inline-block">
+    <a class="breadcrumb-item text-body" routerLink="/main/dashboard">Home</a>
+    <a class="breadcrumb-item text-body" routerLink="/main/vendors">Vendors</a>
+  </nav>
+</div>
+
+
+<div class="card mb-3"> 
+  <div class="card-body">
+     <div class="table-header">
+          <h5 class="card-title">Vendors List</h5>
+           <button class="btn btn-primary mb-3 mr-3"  type="button" (click)="add(content)">Add Vendor</button>
+          <button class="btn btn-primary mb-3 mr-3" type="button" (click)="actionDeleteAllMessage('trash')" *ngIf="selected.length >= 1">Delete All</button>
+    </div>
+    <hr>
+   <ngx-datatable
+          style="width: 100%"
+          class="material"
+          [rows]="rows"
+          [columnMode]="'force'"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [rowHeight]="'auto'"
+          [limit]="3"
+          [messages]="{emptyMessage: 'Add your first vendor', totalMessage: 'total'}"
+          [selected]="selected"
+          [selectionType]="'checkbox'"
+          [selectAllRowsOnPage]="false"
+          [displayCheck]="displayCheck"
+          (activate)="onActivate($event)"
+          (select)='onSelect($event)'>
+          <ngx-datatable-column
+            [sortable]="false"
+            [canAutoResize]="false"
+            [draggable]="false"
+            [resizeable]="false"
+            [headerCheckboxable]="true"
+            [checkboxable]="true">
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Company Name" prop="name">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                  <a style="cursor: pointer;" [routerLink]="['/main/vendor/'+row.id]">{{row.name}}</a>
+              </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Email">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span pTooltip="{{row.email}}" tooltipPosition="top" class="span-hidden">
+                           {{row.email}}
+                </span>
+              </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Phone Number" prop="pnumber">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                   {{row.pnumber}}
+              </ng-template>
+          </ngx-datatable-column>
+           <ngx-datatable-column name="Classification" prop="type">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                   {{row.type}}
+              </ng-template>
+          </ngx-datatable-column> 
+          <ngx-datatable-column name="Location" prop="city">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                   {{row.city}}, {{row.state}}, {{row.zip}}
+              </ng-template>
+          </ngx-datatable-column>
+         <ngx-datatable-column name="Action">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                   <a class="fa fa-edit" #btnElement style="cursor: pointer;" (click)="editVendor(btnElement,row.id,content)"></a>&nbsp;&nbsp;
+                   <a class="fa fa-trash-o" style="cursor: pointer;" #btnElement (click)="actionDeleteMessage(row.id,'trash',btnElement)"></a>
+              </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+  </div>
+</div>
+
+<div class="card" style="margin-top:150px;">
+    <ng-template #content let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 *ngIf="!add_Vendor.id" class="card-title">Add Vendor</h4>
+        <h4 *ngIf="add_Vendor.id"class="card-title">Edit  Vendor</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <div class="row mb-3">
+        <div class="col-12 col-lg-12 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12 col-sm-6 form-group">
+                    <label for="input-name">Name *</label>
+                    <input type="text" class="form-control" id="input-name" [(ngModel)]="add_Vendor.name">
+                </div>
+
+                <div class="col-12 col-sm-6 form-group">
+                  <label for="input-name">Email*</label>
+                  <input type="email" class="form-control" id="input-email" [(ngModel)]="add_Vendor.email" required>
+                </div>  
+
+                  <div class="col-12 col-sm-12 form-group">
+                      <label for="input-name">POC Name :</label>
+                  </div>
+
+                  <div class="col-12 col-sm-4 form-group">
+                      <label for="input-name">First Name *</label>
+                      <input type="text" class="form-control" id="input-first" [(ngModel)]="add_Vendor.first_name"> 
+                  </div>
+
+                   <div class="col-12 col-sm-4 form-group">
+                      <label for="input-name">Last Name *</label>
+                      <input type="text" class="form-control" id="input-last" [(ngModel)]="add_Vendor.last_name">
+                   </div>
+
+                  <div class="col-12 col-sm-4 form-group">
+                    <label for="input-name">Phone Number *</label>
+                      <p-inputMask mask="999-999-9999" placeholder="___-___-____" class="form-control" [(ngModel)]="add_Vendor.pnumber"></p-inputMask>
+                  </div> 
+
+                 <div class="col-12 col-sm-4 form-group">
+                      <label for="exampleFormControlSelect1">Status *</label>
+                          <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Vendor.status">
+                              <option value="New">New</option>
+                              <option value="Active">Active</option>
+                              <option value="Not Active">Not Active</option>
+                          </select>
+                </div>
+                  <div class="col-12 col-sm-4 form-group">
+                        <label for="exampleFormControlSelect1">Payment Terms *</label>
+                        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Vendor.terms">
+                          <option value="Net 7">Net 7</option>
+                          <option value="Net 14">Net 14</option>
+                          <option value="Net 30">Net 30</option>
+                          <option value="Net 45">Net 45</option>
+                          <option value="Net 60">Net 60</option>
+                          <option value="COD">COD</option>
+                        </select>
+                </div>
+                <div class="col-12 col-sm-4 form-group">
+                  <label for="input-name">Supplier Name *</label>
+                  <input type="text" class="form-control" id="input-supplier" [(ngModel)]="add_Vendor.supplier_name">
+                </div>
+                 
+                  <div class="col-12 col-sm-12 form-group">
+                      <label for="input-name">Location:</label>
+                  </div>
+
+                    <div class="col-12 col-sm-4 form-group">
+                      <label for="input-name">City *</label>
+                      <input type="text" class="form-control" id="input-city" [(ngModel)]="add_Vendor.city"> 
+                    </div>
+                     <div class="col-12 col-sm-4 form-group">
+                        <label for="input-name">State *</label>
+                      <input type="text" class="form-control" id="input-state" [(ngModel)]="add_Vendor.state">
+                    </div>
+                    <div class="col-12 col-sm-4 form-group">
+                        <label for="input-name">Zipcode *</label>
+                      <input type="number" class="form-control" id="input-zip" [(ngModel)]="add_Vendor.zip">
+                    </div>
+    
+  
+                   <div class="col-12 col-sm-6 form-group">
+                        <label for="exampleFormControlSelect1">Category</label>
+                        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Vendor.categoty">
+                          <option value="Fruit">Fruit</option>
+                          <option value="Veg">Veg</option>
+                          <option value="Both">Both</option>
+                          <option value="Not Produce">Not Produce</option>
+                        </select>
+                </div>
+                 <div class="col-12 col-sm-6 form-group">
+                        <label for="exampleFormControlSelect1">Type</label>
+                        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Vendor.type">
+                          <option value="Grower">Grower</option>
+                          <option value="Wholesaler">Wholesaler</option>
+                          <option value="Importer">Importer</option>
+                          <option value="Packing Shed">Packing Shed</option>
+                          <option value="Misc">Misc</option>
+                        </select>
+                </div>
+                 <div class="col-12 col-sm-6 form-group">
+                        <label for="exampleFormControlSelect1">Growing Practice</label>
+                        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Vendor.growing_practice">
+                          <option value="Conventional">Conventional</option>
+                          <option value="USDA Organic">USDA Organic</option>
+                          <option value="Both">Both</option>
+                        </select>
+                </div>
+                <div class="col-12 col-sm-6 form-group">
+                        <label for="exampleFormControlSelect1">Freight</label>
+                        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Vendor.freight">
+                          <option value="Delivers">Delivers</option>
+                          <option value="FOB">FOB</option>
+                          <option value="Both">Both</option>
+                        </select>
+                </div>
+                 <div class="col-12 col-sm-12 form-group">
+                      <label for="input-name">Seasonality:</label>
+                  </div>
+
+           
+                    <div class="col-12 col-sm-6 form-group"  *ngIf="!add_Vendor.id">
+                        <label for="input-name">Start Period</label>
+                      <p-calendar [showIcon]="true" [(ngModel)]="add_Vendor.start_period" [minDate]="min" [maxDate]="add_Vendor.end_period" ></p-calendar>
+                    </div>
+                     <div class="col-12 col-sm-6 form-group"  *ngIf="!add_Vendor.id">
+                      <label for="input-name">End Period</label>
+                       <p-calendar [showIcon]="true" [(ngModel)]="add_Vendor.end_period" [minDate]="add_Vendor.start_period" 
+                       [disabled]="!add_Vendor.start_period" ></p-calendar>
+                    </div>
+
+               
+                    <div class="col-12 col-sm-6 form-group" *ngIf="add_Vendor.id">
+                        <label for="input-name">Start Period</label>
+                     <!--  <input type="text" class="form-control" id="input-start" [(ngModel)]="add_Vendor.start_period"> -->
+                      <p-calendar  [showIcon]="true" [(ngModel)]="add_Vendor.start_period" [minDate]="add_Vendor.start_period" [maxDate]="add_Vendor.end_period"></p-calendar>
+                    </div>
+                     <div class="col-12 col-sm-6 form-group" *ngIf="add_Vendor.id">
+                      <label for="input-name">End Period</label>
+                      <!-- <input type="text" class="form-control" id="input-end" [(ngModel)]="add_Vendor.end_period"> -->
+                       <p-calendar  [showIcon]="true" [(ngModel)]="add_Vendor.end_period" [minDate]="add_Vendor.start_period"  ></p-calendar>
+                    </div>
+                
+                 <div class="col-12 col-sm-4 form-group">
+                  <label for="input-name">Price Agreement</label>
+                  <input type="text" class="form-control" id="input-agreement" [(ngModel)]="add_Vendor.price_agreement" required>
+                </div> 
+                <div class="col-12 col-sm-4 form-group">
+                  <label for="input-name">Billing Address</label>
+                  <input type="text" class="form-control" id="input-address" [(ngModel)]="add_Vendor.billing_address" required>
+                </div>
+                <div class="col-12 col-sm-4 form-group">
+                        <label for="exampleFormControlSelect1">Certifications</label>
+                        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="add_Vendor.certifications">
+                          <option value="cert 1">cert 1</option>
+                          <option value="cert 2">cert 2</option>
+                          <option value="cert 3">cert 3</option>
+                          <option value="cert 4 ">cert 4 </option>
+                        </select>
+                </div>
+                <div class="col-12 col-sm-4 form-group">
+                  <label for="input-name">Current Balance </label>
+                  <input type="text" class="form-control" id="input-address" [(ngModel)]="add_Vendor.current_balance" required>
+                </div>
+                 <div class="col-12 col-sm-4 form-group">
+                  <label for="input-name">Website </label>
+                  <input type="text" class="form-control" id="input-website" [(ngModel)]="add_Vendor.website" required>
+                </div>
+                <div class="col-12 col-sm-4 form-group">
+                  <label for="input-name">Misc Notes </label>
+                  <input type="text" class="form-control" id="input-misc_notes" [(ngModel)]="add_Vendor.misc_notes" required>
+                </div>
+                <div style="width: 100%; float: left; padding: 0 15px">
+                 <label for="input-name">Commodities </label>&nbsp;&nbsp;
+                </div>
+                <div class="col-12 col-sm-12 form-group">
+                  <div class="user_beneficiary col-12 col-sm-4 form-group pull-left">
+                    <p-chips [(ngModel)]="add_Vendor.commodities" class="custom-tag-vendor" placeholder="Type To Add.."></p-chips>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button  type="button" class="btn btn-primary" (click)="c('Close click')">Cancel</button>
+        <button  *ngIf="!add_Vendor.id" type="button" class="btn btn-primary" (click)="addVendors()">Add</button>
+        <button  *ngIf="add_Vendor.id" type="button" class="btn btn-primary" (click)="updateVendors()">Update</button>
+      </div>
+    </ng-template>
+ </div>

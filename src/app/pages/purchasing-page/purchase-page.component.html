@@ -1,0 +1,89 @@
+<h2 class="text-center">Purchasing</h2>
+<div class="text-center">
+   <nav class="breadcrumb mx-auto d-inline-block">
+      <a class="breadcrumb-item text-body" routerLink="/main/dashboard">Home</a>
+      <a class="breadcrumb-item text-body" routerLink="/main/purchase">Purchase</a>
+   </nav>
+</div>
+<div class="card">
+      <div class="modal-header">
+         <h5 class="card-title">Purchasing</h5>
+      </div>
+      <div class="modal-body">
+       <div class="row mb-3">
+        <div class="col-12 col-lg-12 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12 col-sm-6 form-group">
+                    <label for="input-name">Product:</label>
+                     <p-autoComplete [(ngModel)]="product" [suggestions]="filteredBrands" (completeMethod)="filterBrands($event)" [size]="30" [minLength]="1" placeholder="Product Name or Product Sku" class="p-autoComplete" (onSelect)="getVendors()" (onClear)="clear()">
+                     </p-autoComplete>
+                </div>
+                <div class="col-12 col-sm-12 form-group ">
+                  <div class="card mb-3"> 
+                      <div class="card-body">
+                         <div class="table-header">
+                              <h5 class="card-title">Vendor Detail</h5>
+                        </div>
+                        <hr>
+                       <ngx-datatable
+                              style="width: 100%"
+                              class="material"
+                              [rows]="rows"
+                              [columnMode]="'force'"
+                              [headerHeight]="50"
+                              [footerHeight]="50"
+                              [rowHeight]="'auto'"
+                              [limit]="3"
+                              [messages]="{emptyMessage: 'Vendor Not Avilable for this product', totalMessage: 'total'}"
+                              [selected]="selected"
+                              [selectionType]="'checkbox'"
+                              [selectAllRowsOnPage]="false"
+                              [displayCheck]="displayCheck"
+                              (activate)="onActivate($event)"
+                              (select)='onSelect($event)'>
+                              <ngx-datatable-column name="Company Name" prop="name">
+                                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                      <a style="cursor: pointer;" [routerLink]="['/main/vendor/'+row.id]">{{row.name}}</a>
+                                  </ng-template>
+                              </ngx-datatable-column>
+                              <ngx-datatable-column name="Email">
+                                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                        <span pTooltip="{{row.email}}" tooltipPosition="top" class="span-hidden">
+                                               {{row.email}}
+                                    </span>
+                                  </ng-template>
+                              </ngx-datatable-column>
+                              <ngx-datatable-column name="Phone Number" prop="pnumber">
+                                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                       {{row.pnumber}}
+                                  </ng-template>
+                              </ngx-datatable-column>
+                               <ngx-datatable-column name="Classification" prop="type">
+                                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                       {{row.type}}
+                                  </ng-template>
+                              </ngx-datatable-column> 
+                              <ngx-datatable-column name="Location" prop="city">
+                                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                       {{row.city}}, {{row.state}}, {{row.zip}}
+                                  </ng-template>
+                              </ngx-datatable-column>
+                            </ngx-datatable>
+                      </div>
+                    </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <!-- <div class="modal-footer">
+         <button  type="button" class="btn btn-primary">Cancel</button>
+        <button   type="button" class="btn btn-primary">Submit</button> 
+      </div> -->
+</div> 

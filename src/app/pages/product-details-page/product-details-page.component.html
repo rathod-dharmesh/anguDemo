@@ -1,0 +1,104 @@
+<h2 class="text-center">Product Details</h2>
+<div class="text-center">
+  <nav class="breadcrumb mx-auto d-inline-block">
+    <a class="breadcrumb-item text-body" routerLink="/">Home</a>
+    <a class="breadcrumb-item text-body" routerLink="/">E-commerce</a>
+    <span class="breadcrumb-item active">Modern</span>
+  </nav>
+</div>
+
+<div class="row no-gutters mb-4">
+  <div class="col-12 col-lg-6 order-2 order-lg-1">
+    <div class="card h-100">
+      <div class="card-body px-md-5 py-md-4">
+        <h5>Chair</h5>
+        <div>Product ID: GH1234SR</div>
+        <h2 class="d-sm-flex my-4">
+          <span>Modern</span>
+          <span class="ml-auto">$ 852.00</span>
+        </h2>
+        <div class="text-justify mb-4">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+          consequat.
+        </div>
+        <div class="mb-2">COLOR:</div>
+        <div class="mb-4 d-flex">
+          <div class="custom-control custom-radio color-radio dark mr-2">
+            <input type="radio" id="color-radio-1" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="color-radio-1"></label>
+          </div>
+          <div class="custom-control custom-radio color-radio brown mr-2">
+            <input type="radio" id="color-radio-2" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="color-radio-2"></label>
+          </div>
+          <div class="custom-control custom-radio color-radio grey mr-2">
+            <input type="radio" id="color-radio-3" name="customRadio" class="custom-control-input">
+            <label class="custom-control-label" for="color-radio-3"></label>
+          </div>
+        </div>
+        <div class="d-sm-flex align-items-center mb-3">
+          <div class="mb-2 text-center">
+            <button type="button" class="btn btn-outline-secondary"><span class="h5">ADD TO CART</span></button>
+          </div>
+          <div class="ml-auto text-center">
+            <a class="px-gdn-icon mx-2" href=""><i class="icon-social-facebook"></i></a>
+            <a class="px-gdn-icon mx-2" href=""><i class="icon-social-pinterest"></i></a>
+            <a class="px-gdn-icon mx-2" href=""><i class="icon-social-twitter"></i></a>
+          </div>
+        </div>
+        <div class="d-flex align-items-start mb-4">
+          <a class="px-gdn-icon mr-2" href=""><i class="icon-location-pin"></i></a>
+          <span>AVAILABILITY IN STORE</span>
+        </div>
+        <div>
+          <ngb-tabset type="pills" class="custom-tabs">
+            <ngb-tab title="DESCRIPTION">
+              <ng-template ngbTabContent>
+                <div class="text-justify">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto blanditiis ea in quasi
+                    reprehenderit repudiandae. Amet, architecto beatae debitis deserunt dignissimos dolores ex inventore
+                    iste itaque libero minima nemo nobis.</p>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium commodi deserunt dolore
+                    fugiat
+                    ipsam labore laudantium necessitatibus omnis quaerat temporibus.</p>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda, quia!</p>
+                </div>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab title="RETURN & EXCHANGE">
+              <ng-template ngbTabContent>
+                <div class="text-justify">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum, voluptates?</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At deleniti doloribus ipsam? At beatae,
+                  distinctio doloremque doloribus eum, exercitationem explicabo laboriosam maxime odio perspiciatis
+                  possimus praesentium quis soluta ullam voluptate.</p>
+                </div>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab title="DELIVERY">
+              <ng-template ngbTabContent>
+                <div class="text-justify">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad architecto consequatur
+                  cupiditate deleniti deserunt dolore eius est excepturi explicabo iure laboriosam libero maiores non
+                  nostrum omnis possimus, provident quae qui reiciendis saepe sed sit, sunt tempora tempore temporibus
+                  totam. Aspernatur blanditiis corporis deserunt dolor, eos error eum fugit maxime necessitatibus
+                  nesciunt non nostrum officiis quia repudiandae vitae. Dolorem, reiciendis.</p>
+                </div>
+              </ng-template>
+            </ngb-tab>
+          </ngb-tabset>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-lg-6 order-1 order-lg-2 gallery">
+    <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+    <div class="new-label text-primary px-3 py-1">NEW</div>
+  </div>
+</div>
+<div class="text-center">
+  <a href="/main/products" class="h5">RELATED PRODUCTS</a>
+</div>
+
+

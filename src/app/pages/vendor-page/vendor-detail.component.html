@@ -1,0 +1,551 @@
+<p-confirmDialog></p-confirmDialog>
+
+<div class="col-12 col-sm-12">
+   <div class="card custome-form col-12 col-sm-8" style="border-radius:4px; float: left; ">
+      <div class="modal-header" style="width: 100%; float: left; display: inline-block;">
+         <h4 style="color:#484647; width: auto; float: left;"> Vendor Profile Information</h4>
+         <button type="button"
+            style="background-color: #F26224; line-height: 0; font-size: 14px; border-radius: 4px; height: 35px; width: 143px; border-radius: 4px; float: right;"
+            class="btn btn-primary" (click)="updateVendors('all')">Save
+         </button>
+         <button type="button" style="    border-color: #9d9d9e; border-radius: 4px; height: 35px; width: 143px; border-radius: 4px; background-color: #9D9D9E; line-height: 0; font-size: 14px;     float: right;
+            margin: 0 10px 0 0;" class="btn btn-primary">Cancel
+         </button>
+      </div>
+      <div class="modal-body">
+         <div class="row mb-3">
+            <div class="col-12 col-lg-12 mb-3">
+               <div class="card">
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-12 col-sm-12 main-group user-information">
+                           <label for="input-name">User Information</label>
+                        </div>
+                        <span class="line-2 col-12  col-sm-12"></span>
+                        <div class="col-12 col-sm-12 no-padding">
+                           <div class="col-12 col-sm-6 form-group one-input">
+                              <label for="input-name">Name: </label>
+                              <input [disabled]="!editable.name"
+                              type="text" class="col-12 col-sm-11 form-control details col-12 col-sm-11" id="input-name"
+                              [(ngModel)]="add_Vendor.name" [ngClass]="(editable.name)?'border-red':'' ">
+                              <i *ngIf="!editable.name" (click)="displayfield('name')"
+                              class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true"></i>
+                              <span class="col-sm-11">
+                              <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('name')"
+                              *ngIf="editable.name"></i>
+                              <i class="fa fa-check" (click)="updateVendors('name')"
+                              *ngIf="editable.name"></i>
+                              </span>
+                           </div>
+                        </div>
+                        <div class="col-12 col-sm-12 no-padding">
+                           <div class="col-12 col-sm-6 form-group one-input">
+                              <label for="input-name">Email: </label>
+                              <input [disabled]="!editable.email" type="email"
+                              class="col-12 col-sm-11 form-control details col-12 col-sm-11" id="input-email"
+                              [(ngModel)]="add_Vendor.email" [ngClass]="(editable.email)?'border-red':'' ">
+                              <i (click)="displayfield('email')" *ngIf="!editable.email"
+                              class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true"></i>
+                              <span class="col-sm-11">
+                              <i class="fa fa-check" (click)="updateVendors('email')"
+                              *ngIf="editable.email"></i>
+                              <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('email')"
+                              *ngIf="editable.email"></i>
+                              </span>
+                           </div>
+                        </div>
+                        <div class="col-12 col-sm-12 main-group user-information">
+                           <label for="input-name">POC Information</label>
+                        </div>
+                        <span class="line-2 col-12  col-sm-12"></span>
+                        <div class="col-12 col-sm-12 main-group no-padding">
+                           <div class="col-12 col-sm-6 form-group one-input">
+                              <label for="input-name">First Name: </label>
+                              <input type="text" class="form-control details col-12 col-sm-11" id="input-first"
+                              [(ngModel)]="add_Vendor.first_name" [disabled]="!editable.first_name"
+                              [ngClass]="(editable.first_name)?'border-red':'' ">
+                              <i (click)="displayfield('first_name')" *ngIf="!editable.first_name"
+                              class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true"></i>
+                              <span class="col-sm-11">
+                              <i class="fa fa-check" (click)="updateVendors('first_name')"
+                              *ngIf="editable.first_name"></i>
+                              <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('first_name')"
+                              *ngIf="editable.first_name"></i>
+                              </span>
+                           </div>
+                           <div class="col-12 col-sm-6 form-group one-input">
+                              <label for="input-name">Last Name: </label>
+                              <input type="text" class="form-control details col-12 col-sm-11" id="input-last"
+                              [(ngModel)]="add_Vendor.last_name" [disabled]="!editable.last_name"
+                              [ngClass]="(editable.last_name)?'border-red':'' ">
+                              <i (click)="displayfield('last_name')" *ngIf="!editable.last_name"
+                              class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true"></i>
+                              <span class="col-sm-11">
+                              <i class="fa fa-check" (click)="updateVendors('last_name')"
+                              *ngIf="editable.last_name"></i>
+                              <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('last_name')"
+                              *ngIf="editable.last_name"></i>
+                              </span>
+                           </div>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group one-input">
+                           <label for="input-name">Phone Number: </label>
+                           <p-inputMask mask="999-999-9999" placeholder="___-___-____"
+                           class="form-control details col-12 col-sm-11" [(ngModel)]="add_Vendor.pnumber"
+                           [disabled]="!editable.pnumber"></p-inputMask>
+                           <i (click)="displayfield('pnumber')" *ngIf="!editable.pnumber"
+                           class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true"></i>
+                           <span class="col-sm-11">
+                           <i class="fa fa-check" (click)="updateVendors('pnumber')"
+                           *ngIf="editable.pnumber"></i>
+                           <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('pnumber')"
+                           *ngIf="editable.pnumber"></i>
+                           </span>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group one-input">
+                           <label for="exampleFormControlSelect1">Status: </label>
+                           <select class="form-control col-12 col-sm-11" id="exampleFormControlSelect1"
+                           [(ngModel)]="add_Vendor.status" [disabled]="!editable.status"
+                           [ngClass]="(editable.status)?'border-red':'' ">
+                           <option value="New">New</option>
+                           <option value="Active">Active</option>
+                           <option value="Not Active">Not Active</option>
+                           </select>
+                           <i (click)="displayfield('status')" *ngIf="!editable.status"
+                           class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true"></i>
+                           <span class="col-sm-11">
+                           <i class="fa fa-check" (click)="updateVendors('status')"
+                           *ngIf="editable.status"></i>
+                           <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('status')"
+                           *ngIf="editable.status"></i>
+                           </span>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group one-input">
+                           <label for="exampleFormControlSelect1">Payment Terms: </label>
+                           <select class="form-control col-12 col-sm-11" id="exampleFormControlSelect1"
+                           [(ngModel)]="add_Vendor.terms"
+                           [disabled]="!editable.terms" [ngClass]="(editable.terms)?'border-red':'' ">
+                           <option value="Net 7">Net 7</option>
+                           <option value="Net 14">Net 14</option>
+                           <option value="Net 30">Net 30</option>
+                           <option value="Net 45">Net 45</option>
+                           <option value="Net 60">Net 60</option>
+                           <option value="COD">COD</option>
+                           </select>
+                           <i (click)="displayfield('terms')" *ngIf="!editable.terms"
+                           class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true"></i>
+                           <span class="col-sm-11">
+                           <i class="fa fa-check" (click)="updateVendors('terms')" *ngIf="editable.terms"></i>
+                           <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('terms')"
+                           *ngIf="editable.terms"></i>
+                           </span>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group one-input">
+                           <label for="input-name">Supplier Name: </label>
+                           <input type="text" class="form-control details col-12 col-sm-11" id="input-supplier"
+                           [(ngModel)]="add_Vendor.supplier_name" [disabled]="!editable.supplier_name"
+                           [ngClass]="(editable.supplier_name)?'border-red':'' ">
+                           <i (click)="displayfield('supplier_name')" *ngIf="!editable.supplier_name"
+                           class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true"></i>
+                           <span class="col-sm-11">
+                           <i class="fa fa-check" (click)="updateVendors('supplier_name')"
+                           *ngIf="editable.supplier_name"></i>
+                           <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('supplier_name')"
+                           *ngIf="editable.supplier_name"></i>
+                           </span>
+                        </div>
+                        <div class="col-12 col-sm-12 main-group user-information">
+                           <label for="input-name">Location</label>
+                        </div>
+                        <span class="line-2 col-12  col-sm-12"></span>
+                        <div class="col-12 col-sm-12 main-group">
+                           <div class="col-12 col-sm-6 form-group one-input">
+                              <label for="input-name">City: </label>
+                              <input type="text" class="form-control details col-12 col-sm-11" id="input-city"
+                              [(ngModel)]="add_Vendor.city" [disabled]="!editable.city"
+                              [ngClass]="(editable.city)?'border-red':'' ">
+                              <i (click)="displayfield('city')" *ngIf="!editable.city"
+                              class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true"></i>
+                              <span class="col-sm-11">
+                              <i class="fa fa-check" (click)="updateVendors('city')"
+                              *ngIf="editable.city"></i>
+                              <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('city')"
+                              *ngIf="editable.city"></i>
+                              </span>
+                           </div>
+                           <div class="col-12 col-sm-6 form-group one-input">
+                              <label for="input-name">State: </label>
+                              <input type="text" class="form-control details col-12 col-sm-11" id="input-state"
+                              [(ngModel)]="add_Vendor.state" [disabled]="!editable.state"
+                              [ngClass]="(editable.state)?'border-red':'' ">
+                              <i (click)="displayfield('state')" *ngIf="!editable.state"
+                              class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true"></i>
+                              <span class="col-sm-11">
+                              <i class="fa fa-check" (click)="updateVendors('state')"
+                              *ngIf="editable.state"></i>
+                              <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('state')"
+                              *ngIf="editable.state"></i>
+                              </span>
+                           </div>
+                           <div class="col-12 col-sm-6 form-group one-input">
+                              <label for="input-name">Zipcode: </label>
+                              <input type="number" class="form-control details col-12 col-sm-11" id="input-zip"
+                              [(ngModel)]="add_Vendor.zip" [disabled]="!editable.zip"
+                              [ngClass]="(editable.zip)?'border-red':'' ">
+                              <i (click)="displayfield('zip')" *ngIf="!editable.zip"
+                              class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true"></i>
+                              <span class="col-sm-11">
+                              <i class="fa fa-check" (click)="updateVendors('zip')" *ngIf="editable.zip"></i>
+                              <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('zip')"
+                              *ngIf="editable.zip"></i>
+                              </span>
+                           </div>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group one-input">
+                           <label for="exampleFormControlSelect1">Category: </label>
+                           <select class="form-control col-12 col-sm-11" id="exampleFormControlSelect1"
+                           [(ngModel)]="add_Vendor.categoty" [disabled]="!editable.categoty"
+                           [ngClass]="(editable.categoty)?'border-red':'' ">
+                           <option value="Fruit">Fruit</option>
+                           <option value="Veg">Veg</option>
+                           <option value="Both">Both</option>
+                           <option value="Not Produce">Not Produce</option>
+                           </select> <i (click)="displayfield('categoty')" *ngIf="!editable.categoty"
+                           class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true"></i>
+                           <span class="col-sm-11">
+                           <i class="fa fa-check" (click)="updateVendors('categoty')"
+                           *ngIf="editable.categoty"></i>
+                           <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('categoty')"
+                           *ngIf="editable.categoty"></i>
+                           </span>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group one-input">
+                           <label for="exampleFormControlSelect1">Type: </label>
+                           <select class="form-control col-12 col-sm-11" id="exampleFormControlSelect1"
+                           [(ngModel)]="add_Vendor.type" [disabled]="!editable.type"
+                           [ngClass]="(editable.type)?'border-red':'' ">
+                           <option value="Grower">Grower</option>
+                           <option value="Wholesaler">Wholesaler</option>
+                           <option value="Importer">Importer</option>
+                           <option value="Packing Shed">Packing Shed</option>
+                           <option value="Misc">Misc</option>
+                           </select>
+                           <i (click)="displayfield('type')" *ngIf="!editable.type"
+                           class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true"></i>
+                           <span class="col-sm-11">
+                           <i class="fa fa-check" (click)="updateVendors('type')" *ngIf="editable.type"></i>
+                           <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('type')"
+                           *ngIf="editable.type"></i>
+                           </span>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group one-input">
+                           <label for="exampleFormControlSelect1">Growing Practice: </label>
+                           <select class="form-control col-12 col-sm-11" id="exampleFormControlSelect1"
+                           [(ngModel)]="add_Vendor.growing_practice" [disabled]="!editable.growing_practice"
+                           [ngClass]="(editable.growing_practice)?'border-red':'' ">
+                           <option value="Conventional">Conventional</option>
+                           <option value="USDA Organic">USDA Organic</option>
+                           <option value="Both">Both</option>
+                           </select>
+                           <i (click)="displayfield('growing_practice')" *ngIf="!editable.growing_practice"
+                           class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true"></i>
+                           <span class="col-sm-11">
+                           <i class="fa fa-check" (click)="updateVendors('growing_practice')"
+                           *ngIf="editable.growing_practice"></i>
+                           <i class="fa fa-window-close" aria-hidden="true"
+                           (click)="cancel('growing_practice')" *ngIf="editable.growing_practice"></i>
+                           </span>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group one-input">
+                           <label for="exampleFormControlSelect1">Freight: </label>
+                           <select class="form-control col-12 col-sm-11" id="exampleFormControlSelect1"
+                           [(ngModel)]="add_Vendor.freight" [disabled]="!editable.freight"
+                           [ngClass]="(editable.freight)?'border-red':'' ">
+                           <option value="Delivers">Delivers</option>
+                           <option value="FOB">FOB</option>
+                           <option value="Both">Both</option>
+                           </select> <i (click)="displayfield('freight')" *ngIf="!editable.freight"
+                           class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true"></i>
+                           <span class="col-sm-11">
+                           <i class="fa fa-check" (click)="updateVendors('freight')"
+                           *ngIf="editable.freight"></i>
+                           <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('freight')"
+                           *ngIf="editable.freight"></i>
+                           </span>
+                        </div>
+                        <div class="col-12 col-sm-12 main-group user-information">
+                           <label for="input-name">Seasonality</label>
+                        </div>
+                        <span class="line-2 col-12  col-sm-12"></span>
+                        <div class="col-12 col-sm-12 main-group one-input">
+                           <div class="col-12 col-sm-6 form-group one-input no-padding">
+                              <label for="input-name">Start Period:</label>
+                              <div class="col-12 col-sm-10 no-padding">
+                                 <p-calendar [showIcon]="true" [(ngModel)]="add_Vendor.start_period" class="custom-datepicker"
+                                 [disabled]="!editable.start_period">
+                                 </p-calendar>
+                              </div>
+                              <i (click)="displayfield('start_period')" *ngIf="!editable.start_period"
+                              class=" edit-data fa fa-pencil-square-o fa-1x custom_edit" aria-hidden="true"></i>
+                              <span class="col-sm-11">
+                              <i class="fa fa-check" (click)="updateVendors('start_period')"
+                              *ngIf="editable.start_period"></i>
+                              <i class="fa fa-window-close" aria-hidden="true"
+                              (click)="cancel('start_period')" *ngIf="editable.start_period"></i>
+                              </span>
+                           </div>
+                           <div class="col-12 col-sm-6 form-group one-input no-padding">
+                              <label for="input-name">End Period: </label>
+                              <div class="col-12 col-sm-10 no-padding">
+                                 <p-calendar [showIcon]="true" [(ngModel)]="add_Vendor.end_period"
+                                 [minDate]="add_Vendor.start_period" [disabled]="!editable.end_period"
+                                 class="custom-datepicker"></p-calendar>
+                              </div>
+                              <i (click)="displayfield('end_period')" *ngIf="!editable.end_period"
+                              class=" edit-data fa fa-pencil-square-o fa-1x custom_edit" aria-hidden="true"></i>
+                              <span class="col-sm-11">
+                              <i class="fa fa-check" (click)="updateVendors('end_period')"
+                              *ngIf="editable.end_period"></i>
+                              <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('end_period')"
+                              *ngIf="editable.end_period"></i>
+                              </span>
+                           </div>
+                        </div>
+                        <div class="col-12 col-sm-12 main-group user-information">
+                           <label for="input-name">Price and Billing</label>
+                        </div>
+                        <span class="line-2 col-12  col-sm-12"></span>
+                        <div class="col-12 col-sm-6 form-group one-input">
+                           <label for="input-name">Price Agreement: </label>
+                           <input type="text" class="form-control details col-12 col-sm-11" id="input-agreement"
+                           [(ngModel)]="add_Vendor.price_agreement" [disabled]="!editable.price_agreement"
+                           [ngClass]="(editable.price_agreement)?'border-red':'' ">
+                           <i (click)="displayfield('price_agreement')" *ngIf="!editable.price_agreement"
+                           class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true"></i>
+                           <span class="col-sm-11">
+                           <i class="fa fa-check" (click)="updateVendors('price_agreement')"
+                           *ngIf="editable.price_agreement"></i>
+                           <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('price_agreement')"
+                           *ngIf="editable.price_agreement"></i>
+                           </span>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group one-input">
+                           <label for="input-name">Billing Address: </label>
+                           <input type="text" class="form-control col-12 col-sm-11" id="input-address"
+                           [(ngModel)]="add_Vendor.billing_address" [disabled]="!editable.billing_address"
+                           [ngClass]="(editable.billing_address)?'border-red':'' ">
+                           <i (click)="displayfield('billing_address')" *ngIf="!editable.billing_address"
+                           class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true"></i>
+                           <span class="col-sm-11">
+                           <i class="fa fa-check" (click)="updateVendors('billing_address')"
+                           *ngIf="editable.billing_address"></i>
+                           <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('billing_address')"
+                           *ngIf="editable.billing_address"></i>
+                           </span>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group one-input">
+                           <label for="exampleFormControlSelect1">Certifications: </label>
+                           <select class="form-control col-12 col-sm-11" id="exampleFormControlSelect1"
+                           [(ngModel)]="add_Vendor.certifications" [disabled]="!editable.certifications"
+                           [ngClass]="(editable.certifications)?'border-red':'' ">
+                           <option value="cert 1">cert 1</option>
+                           <option value="cert 2">cert 2</option>
+                           <option value="cert 3">cert 3</option>
+                           <option value="cert 4 ">cert 4</option>
+                           </select>
+                           <i (click)="displayfield('certifications')" *ngIf="!editable.certifications"
+                           class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true"></i>
+                           <span class="col-sm-11">
+                           <i class="fa fa-check" (click)="updateVendors('certifications')"
+                           *ngIf="editable.certifications"></i>
+                           <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('certifications')"
+                           *ngIf="editable.certifications"></i>
+                           </span>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group one-input">
+                           <label for="input-name">Current Balance: </label>
+                           <input type="text" class="form-control details col-12 col-sm-11" id="input-address"
+                           [(ngModel)]="add_Vendor.current_balance" [disabled]="!editable.current_balance"
+                           [ngClass]="(editable.current_balance)?'border-red':'' ">
+                           <i (click)="displayfield('current_balance')" *ngIf="!editable.current_balance"
+                           class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true"></i>
+                           <span class="col-sm-11">
+                           <i class="fa fa-check" (click)="updateVendors('current_balance')"
+                           *ngIf="editable.current_balance"></i>
+                           <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('current_balance')"
+                           *ngIf="editable.current_balance"></i>
+                           </span>
+                        </div>
+                        <div class="col-12 col-sm-6 form-group one-input">
+                           <label for="input-name">Website: </label>
+                           <input type="text" class="form-control details col-12 col-sm-11" id="input-website"
+                           [(ngModel)]="add_Vendor.website" [disabled]="!editable.website"
+                           [ngClass]="(editable.website)?'border-red':'' ">
+                           <i (click)="displayfield('website')" *ngIf="!editable.website"
+                           class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true"></i>
+                           <span class="col-sm-11">
+                           <i class="fa fa-check" (click)="updateVendors('website')"
+                           *ngIf="editable.website"></i>
+                           <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('website')"
+                           *ngIf="editable.website"></i>
+                           </span>
+                        </div>
+                        <div class="col-12 col-sm-9 form-group one-input">
+                           <label for="input-name">Misc Notes: </label>
+                           <textarea class="form-control col-12 col-sm-11" id="input-misc_notes"
+                           [(ngModel)]="add_Vendor.misc_notes" [disabled]="!editable.misc_notes"
+                           style="height: 100% !important; width: 97% !important; border: 1px solid #484647; border-radius: 4px; "
+                           [ngClass]="(editable.misc_notes)?'border-red':'' ">
+                           </textarea>
+                           <i (click)="displayfield('misc_notes')" *ngIf="!editable.misc_notes"
+                           class=" edit-data fa fa-pencil-square-o fa-1x" aria-hidden="true" style="padding-top:37px;"></i>
+                           <span class="col-sm-11">
+                           <i class="fa fa-check" (click)="updateVendors('misc_notes')"
+                           *ngIf="editable.misc_notes"></i>
+                           <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('misc_notes')"
+                           *ngIf="editable.misc_notes"></i>
+                           </span>
+                        </div>
+                       
+                        <div class="col-12 col-sm-6 form-group one-input">
+                           <label for="input-name">Commodities: </label>
+                           <div class="col-12 col-sm-11 no-padding pull-left">
+                              <p-chips [(ngModel)]="add_Vendor.commodities" [disabled]="!editable.commodities" class="custom-tag"
+                              placeholder="Type To Add.."></p-chips>
+                           </div>
+                           <i (click)="displayfield('commodities')" *ngIf="!editable.commodities"
+                           class=" edit-data fa fa-pencil-square-o fa-1x " aria-hidden="true"></i>
+                           <span class="col-sm-11">
+                           <i class="fa fa-check" (click)="updateVendors('commodities')"
+                           *ngIf="editable.commodities"></i>
+                           <i class="fa fa-window-close" aria-hidden="true" (click)="cancel('commodities')"
+                           *ngIf="editable.commodities"></i>
+                           </span>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="modal-footer">
+         <button class="btn btn-primary" type="button"
+            style="border-color: #9d9d9e; border-radius: 4px; height: 35px; width: 143px; border-radius: 4px; background-color: #9D9D9E; line-height: 0; font-size: 14px;">
+         Cancel
+         </button>
+         <button type="button" class="btn btn-primary" (click)="updateVendors('all')"
+            style=" border-radius: 4px; height: 35px; width: 143px; border-radius: 4px;  line-height: 0; font-size: 14px;">
+         Save
+         </button>
+      </div>
+      <div class="modal-header custom-product">
+         <h4> Vendor Product Information</h4>
+         <button class="btn btn-primary mb-3 mr-3"
+         style="float: right; padding: 0.8rem 1.5rem;line-height: 3px;margin-top: 2px; border-radius: 4px;"
+         type="button" (click)="actionDeleteAllMessage('trash')" *ngIf="selected.length >= 1">Delete All
+         </button>
+      </div>
+      <ngx-datatable
+      style="width: 100%; overflow-x: scroll;"
+      class="material"
+      [rows]="rows"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [limit]="3"
+      [messages]="{emptyMessage: 'Add your first Product', totalMessage: 'total'}"
+      [selected]="selected"
+      [selectionType]="'checkbox'"
+      [selectAllRowsOnPage]="false"
+      [displayCheck]="displayCheck"
+      (activate)="onActivate($event)"
+      (select)='onSelect($event)'>
+      <ngx-datatable-column
+      [sortable]="false"
+      [canAutoResize]="false"
+      [draggable]="false"
+      [resizeable]="false"
+      [headerCheckboxable]="true"
+      [checkboxable]="true">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Customer Facing Name" prop="customer_facing_name">
+         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <a>{{row.customer_facing_name}}</a>
+         </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="SKU">
+         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            {{row.sku}}
+         </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Category" prop="category">
+         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            {{row.category}}
+         </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Our Cost" prop="our_cost">
+         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            {{row.our_cost}}
+         </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Action">
+         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <a class="fa fa-edit" #btnElement style="cursor: pointer;"
+            (click)="editProduct(btnElement,row.id,content)"></a>&nbsp;&nbsp;
+            <a class="fa fa-trash-o" style="cursor: pointer;" #btnElement
+            (click)="actionDeleteMessage(row.id,'trash',btnElement)"></a>
+         </ng-template>
+      </ngx-datatable-column>
+      </ngx-datatable>
+   </div>
+   <div class="col-12 col-sm-4 pull-left">
+      <div class="card custome-form custome-boot col-sm-12" style="border-radius:4px; float: right; ">
+         <div class="modal-header" style="width: 100%; float: left; display: inline-block;">
+            <h4 style="color:#484647; width: auto; float: left;"> Total Earnings</h4>
+         </div>
+         <div>
+            <h3 class="side-div">$12, 567.00</h3>
+         </div>
+      </div>
+      <div class="card custome-form custome-boot col-sm-12" style="border-radius:4px; float: right; margin-top: 10px;">
+         <div class="modal-header" style="width: 100%; float: left; display: inline-block; ">
+            <h4 style="color:#484647; width: auto; float: left;"> Total Orders</h4>
+         </div>
+         <div>
+            <h3 class="side-div">234</h3>
+         </div>
+      </div>
+      <div class="card custome-form custome-boot col-sm-12" style="border-radius:4px; float: right; margin-top: 10px;">
+         <div class="modal-header" style="width: 100%; float: left; display: inline-block; ">
+            <h4 style="color:#484647; width: auto; float: left;"> Top SKUs purchased</h4>
+         </div>
+         <div style="overflow-x:scroll;">
+            <table class="table table-sm custom-table">
+               <thead>
+                  <tr>
+                     <td>Sku</td>
+                     <td>purchased</td>
+                     <td>Changes</td>
+                  </tr>
+               </thead>
+                 <tbody>
+                    <tr *ngFor="let item of polarClockItems" [ngStyle]="{color: item.color}">
+                        <td>
+                           <i [ngStyle]="{'border-color': item.color}"></i>
+                           <span>{{item.name}}</span>
+                        </td>
+                        <td>{{Math.floor(item.value * 100)}}%</td>
+                        <td>
+                           <div class="delta" [ngClass]="{negative: item.delta < 0}"
+                              [ngStyle]="{'border-bottom-color': item.color}">
+                           </div>
+                        <span>{{Math.floor(Math.abs(item.delta * 100))}}%</span>
+                       </td>
+                  </tr>
+             </tbody>
+         </table>
+      </div>
+   </div>
+</div>
+</div>

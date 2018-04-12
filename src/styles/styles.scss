@@ -1,0 +1,62 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'variables';
+@import '~bootstrap/scss/bootstrap';
+@import '~font-awesome/scss/font-awesome';
+@import '~simple-line-icons/scss/simple-line-icons';
+@import 'typography';
+@import 'elevation';
+@import 'components/dropdown';
+@import 'components/card';
+@import 'components/buttons';
+@import 'components/forms';
+@import 'components/icons';
+@import 'components/inputs';
+@import 'components/tabs';
+@import 'components/gallery';
+@import 'components/lists';
+@import 'components/rating';
+@import 'components/toggle';
+@import 'components/table';
+@import 'components/tooltip';
+@import 'components/progress';
+@import 'utils/utils';
+
+@include all-utils()
+
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  //font-family: Arvo!important;
+  font-family: 'Arvo', serif!important;
+}
+//Angular router components
+router-outlet ~ * {
+  display: block;
+  height: 100%;
+  min-height: 100%;
+  position: relative;
+}
+
+.side-nav .logo{padding-top: 20px!important;}
+.side-nav .divider{margin-top:7px!important;}
+.side-nav .user-info{color: #484747!important; font-weight: bold; font-family: Arvo; font-size: 15px;     padding-left: 40px!important;}
+.side-nav .menu a{color: #484747!important; font-weight: bold; font-family: Arvo;font-size: 15px;}
+.side-nav .menu a i{color: #484747!important;}
+.side-nav .menu .pointer{border-color: transparent #484747 transparent transparent;font-family: Arvo;}
+
+.btn.btn-primary.generate{line-height: 3px; width: auto; padding: 10px 25px; float: left; margin-top: 10px;}
+
+.modal-header .card-title {margin-bottom: 0; padding-left: 15px; }
+.modal-footer .btn{line-height:7px;}
+
+
+@media (min-width: 576px){
+	.modal-dialog {margin: 6rem auto 2rem; }
+}
+.ui-datepicker-today .ui-state-highlight {
+    background: #f15820;
+    color: #fff!important;
+}
+.ui-tooltip{max-width:100% !important;}

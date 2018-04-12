@@ -1,0 +1,122 @@
+<p-confirmDialog></p-confirmDialog>
+<h2 class="text-center">User List</h2>
+<div class="text-center">
+   <nav class="breadcrumb mx-auto d-inline-block">
+      <a class="breadcrumb-item text-body" routerLink="/main/dashboard">Home</a>
+      <a class="breadcrumb-item text-body" routerLink="/main/user">Users</a>
+   </nav>
+</div>
+<div class="card mb-3">
+   <div class="card-body">
+      <div class="table-header">
+         <h5 class="card-title">Users List</h5>
+         <button class="btn btn-primary mb-3 mr-3" type="button" (click)="add(content)" >Add User</button>
+         <button class="btn btn-primary mb-3 mr-3" type="button" (click)="actionDeleteAllMessage('trash')" *ngIf="selected.length >= 1">Delete All</button>
+      </div>
+      <hr>
+      <ngx-datatable
+      style="width: 100%"
+      class="material"
+      [rows]="rows"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [limit]="3"
+      [messages]="{emptyMessage: 'Add your first vendor', totalMessage: 'total'}"
+      [selected]="selected"
+      [selectionType]="'checkbox'"
+      [selectAllRowsOnPage]="false"
+      [displayCheck]="displayCheck"
+      (activate)="onActivate($event)"
+      (select)='onSelect($event)'>
+      <ngx-datatable-column
+      [sortable]="false"
+      [canAutoResize]="false"
+      [draggable]="false"
+      [resizeable]="false"
+      [headerCheckboxable]="true"
+      [checkboxable]="true">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Name">
+         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            {{row.name}}
+         </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Email">
+         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span pTooltip="{{row.email}}" tooltipPosition="top" class="span-hidden">
+            {{row.email}}
+            </span>
+         </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Position">
+         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            {{row.position}}
+         </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Username">
+         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            {{row.username}}
+         </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Action">
+         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <a class="fa fa-edit" #btnElement style="cursor: pointer;" (click)="editUser(btnElement,row.id,content)"></a>&nbsp;&nbsp;
+            <a class="fa fa-trash-o" style="cursor: pointer;" #btnElement (click)="actionDeleteMessage(row.id,'trash',btnElement)"></a>
+         </ng-template>
+      </ngx-datatable-column>
+      </ngx-datatable>
+   </div>
+</div>
+<div class="card" style="margin-top:150px;">
+   <ng-template #content let-c="close" let-d="dismiss">
+      <div class="modal-header">
+         <h4 *ngIf="!add_User.id" class="card-title">Add User</h4>
+         <h4 *ngIf="add_User.id"class="card-title">Edit  User</h4>
+         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+         <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+      <div class="modal-body">
+         <div class="row mb-3">
+            <div class="col-12 col-lg-8 mb-3">
+               <div class="card">
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-12 col-sm-12 form-group">
+                           <label for="input-name">Name *</label>
+                           <input type="text" class="form-control" id="input-name" [(ngModel)]="add_User.name">
+                        </div>
+                        <div class="col-12 col-sm-12 form-group">
+                           <label for="input-name">Email *</label>
+                           <input type="email" class="form-control" id="input-email" [(ngModel)]="add_User.email">
+                        </div>
+                        <div class="col-12 col-sm-12 form-group">
+                           <label for="exampleFormControlSelect1">Position </label>
+                           <input type="text" class="form-control" id="input-position" [(ngModel)]="add_User.position">
+                          
+                        </div>
+                        <div class="col-12 col-sm-12 form-group">
+                           <label for="input-name">Username *</label>
+                           <input type="text" class="form-control" id="input-username" [(ngModel)]="add_User.username">
+                        </div>
+                        <div class="col-12 col-sm-12 form-group">
+                           <label for="input-name">Password *</label>
+                           <input type="text" class="form-control" id="input-password" [(ngModel)]="add_User.password">
+                           <input *ngIf="!add_User.id" type="button" class="btn btn-primary generate" value="Generate" (click)="generate()" tabindex="2">
+                           <input *ngIf="add_User.id" type="button" class="btn btn-primary generate" value="Reset" (click)="generate()" tabindex="2">
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-primary" (click)="c('Close click')">Cancel</button>
+         <button *ngIf="!add_User.id" type="button" class="btn btn-primary" (click)="addUsers(content)">Add</button>
+         <button *ngIf="add_User.id" type="button" class="btn btn-primary" (click)="updateUsers(content)">Update</button>
+      </div>
+   </ng-template>
+</div>

@@ -1,0 +1,100 @@
+<h2 class="text-center">Contact Page</h2>
+<div class="text-center">
+  <nav class="breadcrumb mx-auto d-inline-block">
+    <a class="breadcrumb-item text-body" routerLink="/">Home</a>
+    <a class="breadcrumb-item text-body" routerLink="/">E-commerce</a>
+    <span class="breadcrumb-item active">Contact Page</span>
+  </nav>
+</div>
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12 col-lg-6 col-xl-3 mb-5">
+        <h5 class="mb-5">Address</h5>
+        <ul class="list-unstyled mb-4">
+          <li class="media mb-4">
+            <div class="d-flex mr-4">
+              <i class="icon-location-pin h1 text-primary"></i>
+            </div>
+            <div class="media-body">
+              <div>97 Oxford St, Manchester</div>
+              <div>United Kingdom</div>
+            </div>
+          </li>
+          <li class="media mb-4">
+            <div class="d-flex mr-4">
+              <i class="icon-phone h1 text-primary"></i>
+            </div>
+            <div class="media-body">
+              <div>700 700 124</div>
+              <div>Mon - Fri 9.00 - 19.00</div>
+            </div>
+          </li>
+          <li class="media">
+            <div class="d-flex mr-4">
+              <i class="icon-envelope h1 text-primary"></i>
+            </div>
+            <div class="media-body">
+              <div class="mt-2">info@sofu.com</div>
+            </div>
+          </li>
+        </ul>
+        <div class="mb-4">
+          <a class="px-gdn-icon mx-2" href=""><i class="icon-social-facebook"></i></a>
+          <a class="px-gdn-icon mx-2" href=""><i class="icon-social-pinterest"></i></a>
+          <a class="px-gdn-icon mx-2" href=""><i class="icon-social-twitter"></i></a>
+          <a class="px-gdn-icon mx-2" href=""><i class="icon-social-instagram"></i></a>
+          <a class="px-gdn-icon mx-2" href=""><i class="icon-social-skype"></i></a>
+        </div>
+        <div>
+          <agm-map [latitude]="lat" [longitude]="lng">
+            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+          </agm-map>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6 col-xl-9 pl-lg-5">
+        <h5 class="mb-5">Get In Touch</h5>
+        <div class="row">
+          <div class="form-group col-12 col-sm-6">
+            <input type="text" class="form-control" placeholder="Name">
+          </div>
+          <div class="form-group col-12 col-sm-6">
+            <input type="email" class="form-control" placeholder="Email">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12 col-sm-6">
+            <input type="text" class="form-control" placeholder="Country">
+          </div>
+          <div class="form-group col-12 col-sm-6">
+            <input type="text" class="form-control" placeholder="Subject">
+          </div>
+        </div>
+        <div class="row mb-5">
+          <div class="form-group col-12">
+            <textarea class="form-control" rows="8" placeholder="Message"></textarea>
+          </div>
+        </div>
+        <div class="text-justify mb-5">
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, magnam.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis dolorum est fuga, in ipsa laborum
+            mollitia natus odit officia quo quod reiciendis, repudiandae temporibus vero voluptates! Aspernatur pariatur
+            sint ut!</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur cum ea enim facilis hic illo maxime
+            reiciendis vero voluptate voluptatibus!</p>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn px-gdn-btn-outline btn-lg card-bg">SEND MESSAGE</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="mb-3 d-flex justify-content-center">
+    <a class="mx-2 no-underline" href=""><i class="icon-social-facebook px-gdn-icon"></i></a>
+    <a class="mx-2 no-underline" href=""><i class="icon-social-pinterest px-gdn-icon"></i></a>
+    <a class="mx-2 no-underline" href=""><i class="icon-social-twitter px-gdn-icon"></i></a>
+  </div>
+  <div class="text-nowrap text-center">2017 <a routerLink="/">SOFU</a> all rights reserved</div>
+</footer>

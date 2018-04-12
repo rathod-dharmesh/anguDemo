@@ -1,0 +1,17 @@
+app-contact-page {
+  padding-bottom: 100px;
+  height: auto;
+  agm-map {
+    height: 350px;
+  }
+  textarea {
+    resize: none;
+  }
+  footer {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10px;
+  }
+}
+
