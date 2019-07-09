@@ -186,7 +186,7 @@ export class UsersPageComponent implements OnInit {
         var msg = ''
         if (this.add_User !== null) {
             if (this.add_User.name == null || this.add_User.name == '' || this.add_User.name.trim().length == 0) {
-                msg += "User name is required.</br>";
+                msg += "Name is required.</br>";
                 flag = true;
             }
             if (this.add_User.email == null || this.add_User.email == '' || this.add_User.email.trim().length == 0) {

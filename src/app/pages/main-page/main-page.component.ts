@@ -32,7 +32,7 @@ export class MainPageComponent implements OnInit {
       iconClass: 'material-icons',
       iconCode: 'dashboard',
     },
-    {
+   /* {
       title: 'Purchasing',
       routerUrl: '/main/purchase',
       iconClass: 'material-icons',
@@ -55,7 +55,7 @@ export class MainPageComponent implements OnInit {
       routerUrl: '/main/vendors',
       iconClass: 'material-icons',
       iconCode: 'person',
-    },
+    },*/
     
     {
       title: 'User',

@@ -17,17 +17,17 @@ const APP_ROUTES: Routes = [
   {
     path: 'main', component: MainPageComponent, children: [
       {path: 'dashboard', component: DashboardPageComponent,canActivate: [AuthGuard]},
-      {path: 'vendors', component: VendorsPageComponent,canActivate: [AuthGuard]},
-      {path: 'vendor/:id', component: VendorsDetailComponent,canActivate: [AuthGuard]},
-      {path: 'products', component: ProductsPageComponent,canActivate: [AuthGuard]},
       {path: 'user', component: UsersPageComponent,canActivate: [AuthGuard]},
-      {path: 'purchase', component: PurchasePageComponent,canActivate: [AuthGuard]},
+    /*{path: 'vendors', component: VendorsPageComponent,canActivate: [AuthGuard]},
+      {path: 'vendor/:id', component: VendorsDetailComponent,canActivate: [AuthGuard]},
+      {path: 'products', component: ProductsPageComponent,canActivate: [AuthGuard]},*/
+    /*{path: 'purchase', component: PurchasePageComponent,canActivate: [AuthGuard]},*/
       {path: '', redirectTo: 'dashboard', pathMatch: 'prefix'},
       {path: '**', redirectTo: 'dashboard', pathMatch: 'prefix'}]
   },
+ /* {path: 'reset-password/:email/:token', component: SetPasswordComponent},
+  {path: 'reset', component: ResetPageComponent},*/
   {path: 'login', component: LoginPageComponent},
-  {path: 'reset-password/:email/:token', component: SetPasswordComponent},
-  {path: 'reset', component: ResetPageComponent},
   {path: '', redirectTo: '/login', pathMatch: 'prefix'},
   {path: '**', redirectTo: '/login', pathMatch: 'prefix'}
   

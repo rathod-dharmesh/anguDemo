@@ -20,99 +20,97 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\JWTAuth;
 
-class Controller extends BaseController
-{
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+class Controller extends BaseController {
+	use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function login(LoginRequest $request, JWTAuth $JWTAuth)
-    {
-        $credentials = $request->only(['email', 'password']);
+	public function login(LoginRequest $request, JWTAuth $JWTAuth) {
+		$credentials = $request->only(['email', 'password']);
 
-        //$role=$request->only('role');
+		//$role=$request->only('role');
 
-        try {
+		try {
 
-            if (empty($credentials['email'])) {
+			if (empty($credentials['email'])) {
 
-                throw new \Exception("Please enter email.", 400);
-            }
-            if (empty($credentials['password'])) {
+				throw new \Exception("Please enter email.", 400);
+			}
+			if (empty($credentials['password'])) {
 
-                throw new \Exception("Please enter password.", 400);
-            }
+				throw new \Exception("Please enter password.", 400);
+			}
 
-            $token = $JWTAuth->attempt(['email' => $credentials['email'], 'password' => $credentials['password']]);
+			//print_r($JWTAuth->attempt($credentials));
 
-            if (!$token) {
-                throw new AccessDeniedHttpException("Invalid email or password.");
-            }
+			$token = $JWTAuth->attempt($credentials);
 
-            $user = User::query();
-            $user = $user->where(['email' => $credentials['email']])->first();
+			if (!$token) {
+				throw new AccessDeniedHttpException("Invalid email or password.");
+			}
 
-            if (!empty($user)) {
-                $user->save();
-                return response()
-                    ->json([
-                        'status' => '200',
-                        'token'  => $token,
-                        'user'   => $user,
-                    ]);
-            } else {
+			$user = User::query();
+			$user = $user->where(['email' => $credentials['email']])->first();
 
-                return response()->json([
+			if (!empty($user)) {
+				$user->save();
+				return response()
+					->json([
+						'status' => '200',
+						'token' => $token,
+						'user' => $user,
+					]);
+			} else {
 
-                    'status' => '400',
-                    'error'  => 'Your Status is Inactive Please Contect to our Help center.',
+				return response()->json([
 
-                ], 400);
+					'status' => '400',
+					'error' => 'Your Status is Inactive Please Contect to our Help center.',
 
-            }
+				], 400);
 
-        } catch (JWTException $e) {
-            return response()->json([
-                'status' => '400',
-                'errors' => $e->getMessage(),
-            ], 400);
+			}
 
-        } catch (AccessDeniedHttpException $e) {
-            return response()->json([
-                'status' => '301',
-                'errors' => $e->getMessage(),
-            ], 301);
-        }
-    }
+		} catch (JWTException $e) {
+			return response()->json([
+				'status' => '400',
+				'errors' => $e->getMessage(),
+			], 400);
 
-    public function sendResetEmail(Request $request)
-    {
+		} catch (AccessDeniedHttpException $e) {
+			return response()->json([
+				'status' => '301',
+				'errors' => $e->getMessage(),
+			], 301);
+		}
+	}
 
-        try {
-            if (empty($request->get('email'))) {
-                throw new \Exception("Please enter email.", 400);
-            }
-            $link = $_SERVER['HTTP_HOST'];
+	public function sendResetEmail(Request $request) {
 
-            $user = User::where('email', '=', $request->get('email'))->first();
-            if (!$user) {
-                throw new NotFoundHttpException();
-            }
-            $token = $this->generate_random_password();
+		try {
+			if (empty($request->get('email'))) {
+				throw new \Exception("Please enter email.", 400);
+			}
+			$link = $_SERVER['HTTP_HOST'];
 
-            $add            = array('email' => $request->get('email'), 'token' => $token);
-            $password_reset = PasswordReset::create($add);
+			$user = User::where('email', '=', $request->get('email'))->first();
+			if (!$user) {
+				throw new NotFoundHttpException();
+			}
+			$token = $this->generate_random_password();
 
-            if (stripos($link, "localhost") !== false) {
+			$add = array('email' => $request->get('email'), 'token' => $token);
+			$password_reset = PasswordReset::create($add);
 
-               
-                $link = env('reset-password-local') . $request->get('email') . '/' . $token;
-            } else {
-                
-                $link = env('reset-password-live') . $request->get('email') . '/' . $token;
-            }
+			if (stripos($link, "localhost") !== false) {
 
-            $to          = $user->email;
-            $subject     = 'Forgot Password';
-            $template_id = '
+				$link = env('reset-password-local') . $request->get('email') . '/' . $token;
+			} else {
+
+				$link = env('reset-password-live') . $request->get('email') . '/' . $token;
+			}
+
+			$to = $user->email;
+			$subject = 'Forgot Password';
+			$template_id = '
             <html>
                 <head>
                     <title>Forgot Password</title>
@@ -126,100 +124,97 @@ class Controller extends BaseController
             </html>
             ';
 
-            $this->send_mail($to, $template_id, [], '', '', $subject);
-            return response()->json([
-                'status'  => '200',
-                'message' => 'Password reset link has been successfully sent on your email id.',
-            ], 200);
+			$this->send_mail($to, $template_id, [], '', '', $subject);
+			return response()->json([
+				'status' => '200',
+				'message' => 'Password reset link has been successfully sent on your email id.',
+			], 200);
 
-        } catch (NotFoundHttpException $e) {
-            return response()
-                ->json([
-                    'status' => '500',
-                    'errors' => "Email id not found.",
-                ], 301);
-        } catch (HttpException $e) {
-            return response()
-                ->json([
-                    'status' => '500',
-                    'errors' => $e->getMessage(),
-                ], 301);
-        }
-    }
+		} catch (NotFoundHttpException $e) {
+			return response()
+				->json([
+					'status' => '500',
+					'errors' => "Email id not found.",
+				], 301);
+		} catch (HttpException $e) {
+			return response()
+				->json([
+					'status' => '500',
+					'errors' => $e->getMessage(),
+				], 301);
+		}
+	}
 
-    public function generate_random_password()
-    {
-        $chars    = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        $password = substr(str_shuffle($chars), 0, 12);
-        return $password;
-    }
+	public function generate_random_password() {
+		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		$password = substr(str_shuffle($chars), 0, 12);
+		return $password;
+	}
 
-    public function send_mail($to, $mail_template_id, $data = array(), $from = "anypol789@gmail.com", $debug = false, $subject)
-    {
+	public function send_mail($to, $mail_template_id, $data = array(), $from = "anypol789@gmail.com", $debug = false, $subject) {
 
-        if (is_array($from)) {
-            $from_email = 'anypol789@gmail.com';
-            $from_name  = 'Hungry Harvest';
-        } else {
-            if (strpos($from, '@') !== false) {
-                $from_email = 'anypol789@gmail.com';
-                $from_name  = 'Hungry Harvest';
-            } else {
-                $from_email = 'anypol789@gmail.com';
-                $from_name  = 'Hungry Harvest';
-            }
-        }
+		if (is_array($from)) {
+			$from_email = 'anypol789@gmail.com';
+			$from_name = 'Hungry Harvest';
+		} else {
+			if (strpos($from, '@') !== false) {
+				$from_email = 'anypol789@gmail.com';
+				$from_name = 'Hungry Harvest';
+			} else {
+				$from_email = 'anypol789@gmail.com';
+				$from_name = 'Hungry Harvest';
+			}
+		}
 
-        $subject = $subject;
-        $message = $mail_template_id;
+		$subject = $subject;
+		$message = $mail_template_id;
 
-        if (empty($to)) {
-            $to = "anypol789@gmail.com";
-        } else {
-            $to = $to;
-        }
+		if (empty($to)) {
+			$to = "anypol789@gmail.com";
+		} else {
+			$to = $to;
+		}
 
-        Mail::send('emails.default', ['message_data' => $message], function ($mail) use ($to, $from_email, $from_name, $subject) {
-            $mail->from($from_email, $from_name);
-            $mail->to($to)->subject($subject);
-        });
+		Mail::send('emails.default', ['message_data' => $message], function ($mail) use ($to, $from_email, $from_name, $subject) {
+			$mail->from($from_email, $from_name);
+			$mail->to($to)->subject($subject);
+		});
 
-        return true;
+		return true;
 
-    }
+	}
 
-    public function resetPassword(Request $request)
-    {   
+	public function resetPassword(Request $request) {
 
-        try {
-            $request = $request->all();
-            $val     = PasswordReset::where('email', $request['email'])->where('token', $request['token'])->get()->first();
+		try {
+			$request = $request->all();
+			$val = PasswordReset::where('email', $request['email'])->where('token', $request['token'])->get()->first();
 
-            if (!$val) {
-                throw new NotFoundHttpException();
-            }
+			if (!$val) {
+				throw new NotFoundHttpException();
+			}
 
-            $user = User::where('email', $request['email'])->get()->first();
+			$user = User::where('email', $request['email'])->get()->first();
 
-            $user = User::find($user->id);
+			$user = User::find($user->id);
 
-            $user->password = bcrypt($request['password']);
+			$user->password = bcrypt($request['password']);
 
-            $user->save();
-            $delete = PasswordReset::where('email', $val['email'])->delete();
-            return response()->json([
-                'status'  => '200',
-                'message' => 'Password has been changed successfully!!!.',
-            ], 200);
+			$user->save();
+			$delete = PasswordReset::where('email', $val['email'])->delete();
+			return response()->json([
+				'status' => '200',
+				'message' => 'Password has been changed successfully!!!.',
+			], 200);
 
-        } catch (HttpException $e) {
-            return response()
-                ->json([
-                    'status' => '500',
-                    'errors' => $e->getMessage(),
-                ], 301);
-        }
+		} catch (HttpException $e) {
+			return response()
+				->json([
+					'status' => '500',
+					'errors' => $e->getMessage(),
+				], 301);
+		}
 
-    }
+	}
 
 }
