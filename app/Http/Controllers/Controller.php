@@ -28,6 +28,7 @@ class Controller extends BaseController {
 
 		//$role=$request->only('role');
 
+		//echo Hash::make('123456');exit;
 		try {
 
 			if (empty($credentials['email'])) {
@@ -39,9 +40,7 @@ class Controller extends BaseController {
 				throw new \Exception("Please enter password.", 400);
 			}
 
-			//print_r($JWTAuth->attempt($credentials));
-
-			$token = $JWTAuth->attempt($credentials);
+			$token = $JWTAuth->attempt(['email' => $credentials['email'], 'password' => $credentials['password']]);
 
 			if (!$token) {
 				throw new AccessDeniedHttpException("Invalid email or password.");
