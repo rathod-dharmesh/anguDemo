@@ -14,7 +14,7 @@ class AddRecordUserTable extends Migration
     public function up()
     {
         DB::table('users')->insert([
-            ['name' => 'Admin', 'email' => 'admin@gmail.com', 'password'=>'123123' ,'position' =>'new' , 'username'=>'admin']
+            ['name' => 'Admin', 'email' => 'admin@gmail.com', 'password'=>Hash::make('123123') ,'position' =>'new' , 'username'=>'admin']
         ]);
     }
 
